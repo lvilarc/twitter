@@ -7,7 +7,7 @@ const SearchBar = ({ onChange, onSearch }) => {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Pesquisar..."
+          placeholder="Pesquisar"
           onChange={onChange}
         />
         <button type="button" onClick={onSearch}>

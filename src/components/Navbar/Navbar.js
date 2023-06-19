@@ -18,7 +18,7 @@ function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const dropdownRef = useRef();
-    
+
     useEffect(() => {
         if (isDropdownOpen) {
             let handler = (e) => {
@@ -26,18 +26,18 @@ function Navbar() {
                     setIsDropdownOpen(false);
                 }
             };
-    
+
             document.addEventListener("mousedown", handler);
-    
-            return() => {
+
+            return () => {
                 document.removeEventListener("mousedown", handler);
             }
         }
-       
+
     });
 
 
-   
+
 
 
 
@@ -96,7 +96,7 @@ function Navbar() {
             {isLoggeedIn && <div className="avatar-button" ref={dropdownRef}>
                 <div
                     className="avatar"
-                    onClick={()=>setIsDropdownOpen(!isDropdownOpen)}
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
                     <FaUser />
                 </div>
@@ -109,89 +109,96 @@ function Navbar() {
                     </div>
                 )}
             </div>}
+            {/* Modal para se logar */}
             <Modal
                 isOpen={isLoginModalOpen}
                 onRequestClose={closeLoginModal}
                 className="modal-login"
                 overlayClassName="overlay-login"
-            >
-                <button className='modal-close-button' onClick={closeLoginModal}><FaTimes /></button>
-                <h2 className="modal-login__title">Entrar</h2>
-                <form className="modal-login__form" onSubmit={handleLogin}>
-                    <label className="modal-login__label">
-                        Email:
-                        <input
-                            className="modal-login__input"
-                            type="email"
-                            // value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
-                    <label className="modal-login__label">
-                        Senha:
-                        <input
-                            className="modal-login__input"
-                            type="password"
-                            // value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </label>
-                    <button className="modal-login__button" type="submit">Entrar</button>
-                </form>
-                <p className="modal-login__message">
-                    Ainda não tem cadastro? <button className="modal-login__link" onClick={handleCadastrese}>Cadastre-se</button>
-                </p>
+            ><div className='div-cadastro'>
+                    <button className='modal-close-button' onClick={closeLoginModal}><FaTimes /></button>
+                    <h2 className="modal-login__title">Entrar</h2>
+                    <form className="modal-login__form" onSubmit={handleLogin}>
+                        <label className="modal-login__label">
+                            Email:
+                            <input
+                                className="modal-login__input"
+                                type="email"
+                                // value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+                        <label className="modal-login__label">
+                            Senha:
+                            <input
+                                className="modal-login__input"
+                                type="password"
+                                // value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </label>
+                        <button className="modal-login__button" type="submit">Entrar</button>
+                    </form>
+                    <p className="modal-login__message">
+                        Ainda não tem cadastro? <button className="modal-login__link" onClick={handleCadastrese}>Cadastre-se</button>
+                    </p>
+                </div>
+
             </Modal>
+            {/* Modal para se cadastrar */}
             <Modal
                 isOpen={isCadastroModalOpen}
                 onRequestClose={closeCadastroModal}
                 className="modal-login"
                 overlayClassName="overlay-login"
             >
-                <button className='modal-close-button' onClick={closeCadastroModal}><FaTimes /></button>
-                <h2 className="modal-login__title">Cadastro</h2>
-                <form className="modal-login__form" onSubmit={handleLogin}>
-                    <label className="modal-login__label">
-                        Nome:
-                        <input
-                            className="modal-login__input"
-                            type="text"
-                            // value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
-                    <label className="modal-login__label">
-                        Email:
-                        <input
-                            className="modal-login__input"
-                            type="email"
-                            // value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
-                    <label className="modal-login__label">
-                        Username:
-                        <input
-                            className="modal-login__input"
-                            type="email"
-                            // value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
-                    <label className="modal-login__label">
-                        Senha:
-                        <input
-                            className="modal-login__input"
-                            type="password"
-                            // value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </label>
-                    <button className="modal-login__button" type="submit">Criar conta</button>
-                </form>
-                <p className="modal-login__message">
-                    Já possui cadastro? <button className="modal-login__link" onClick={handleEntrar}>Entrar</button>
-                </p>
+                <div className='div-cadastro'>
+                    <button className='modal-close-button' onClick={closeCadastroModal}><FaTimes /></button>
+                    <h2 className="modal-login__title">Cadastro</h2>
+                    <form className="modal-login__form" onSubmit={handleLogin}>
+                        <label className="modal-login__label">
+                            Nome:
+                            <input
+                                className="modal-login__input"
+                                type="text"
+                                // value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+                        <label className="modal-login__label">
+                            Email:
+                            <input
+                                className="modal-login__input"
+                                type="email"
+                                // value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+                        <label className="modal-login__label">
+                            Username:
+                            <input
+                                className="modal-login__input"
+                                type="email"
+                                // value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+                        <label className="modal-login__label">
+                            Senha:
+                            <input
+                                className="modal-login__input"
+                                type="password"
+                                // value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </label>
+                        <button className="modal-login__button" type="submit">Criar conta</button>
+                    </form>
+                    <p className="modal-login__message">
+                        Já possui cadastro? <button className="modal-login__link" onClick={handleEntrar}>Entrar</button>
+                    </p>
+                </div>
+
             </Modal>
 
         </nav>

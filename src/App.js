@@ -8,7 +8,7 @@ import fotoPerfil from './foto-perfil.png';
 function App() {
   return (
     <div className="App">
-      <Navbar></Navbar>
+      {/* <Navbar></Navbar> */}
       <div className="div-central">
         <SearchBar/>
         <TweetHome
