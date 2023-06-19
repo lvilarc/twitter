@@ -1,0 +1,257 @@
+.navbar {
+    background-color: #1DA1F2;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+  }
+  
+  .navbar-title {
+    border: none;
+    background-color: #1DA1F2;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 200px;
+    margin-top: 6px;
+  }
+  .navbar-title:hover {
+    cursor: pointer;
+  }
+  
+  /* .account-button {
+    margin-right: 194px;
+  } */
+
+  .login-button {
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-right: 234px;
+  }
+  
+  .login-button:hover {
+    text-decoration: underline;
+  }
+  
+  /* extra */
+
+.avatar {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 234px;
+  }
+  
+  .avatar svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  
+  .modal-content {
+    position: absolute;
+    top: 60px; /* Posiciona o modal abaixo da navbar */
+    right: 206px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    /* border: 2px solid #1DA1F2; */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    outline: none !important;
+  }
+  
+  .modal-options {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-option {
+    padding: 5px 10px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .modal-option:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* extra */
+  .modal-login {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 4px;
+  padding: 20px;
+  width: 300px;
+  max-width: 80%;
+}
+
+.overlay-login {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-login__title {
+  margin-top: 0;
+}
+
+.modal-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-login__label {
+  display: block;
+}
+
+.modal-login__input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-login__button {
+  background-color: #1DA1F2;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-login__button:hover {
+  background-color: #0c87c9;
+}
+
+.modal-login__message {
+  margin-top: 20px;
+}
+
+.modal-login__link {
+  color: #1DA1F2;
+  text-decoration: none;
+}
+
+.modal-login__link:hover {
+  text-decoration: underline;
+}
+
+/* extra */
+
+.modal-login {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 4px;
+    padding: 20px;
+    width: 300px;
+    max-width: 80%;
+  }
+  
+  .overlay-login {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-login__title {
+    margin-top: 0;
+  }
+  
+  .modal-login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .modal-login__label {
+    display: block;
+  }
+  
+  .modal-login__input {
+    width: 96%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .modal-login__button {
+    background-color: #1DA1F2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .modal-login__button:hover {
+    background-color: #0c87c9;
+  }
+  
+  .modal-login__message {
+    margin-top: 20px;
+  }
+  
+  .modal-login__link {
+    font-size: 14px;
+    color: #1DA1F2;
+    text-decoration: none;
+    border: none;
+    background-color: white;
+  }
+  
+  .modal-login__link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: #999;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .modal-close-button:hover {
+    color: #555;
+  }
+  
+  .modal-close-button:focus {
+    outline: none;
+  }
+  
