@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { FaUser, FaCog, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 
@@ -8,15 +8,39 @@ Modal.setAppElement('#root');
 
 function Navbar() {
 
-  
-    const [isLoggeedIn, setIsLoggedIn] = useState(true);
+
+    const [isLoggeedIn, setIsLoggedIn] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isCadastroModalOpen, setIsCadastroModalOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  
+    const dropdownRef = useRef();
+    
+    useEffect(() => {
+        if (isDropdownOpen) {
+            let handler = (e) => {
+                if (!dropdownRef.current.contains(e.target)) {
+                    setIsDropdownOpen(false);
+                }
+            };
+    
+            document.addEventListener("mousedown", handler);
+    
+            return() => {
+                document.removeEventListener("mousedown", handler);
+            }
+        }
+       
+    });
+
+
+   
+
+
+
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -69,22 +93,21 @@ function Navbar() {
         <nav className="navbar">
             <button className="navbar-title">Twitter</button>
             {!isLoggeedIn && <button className="login-button" onClick={openLoginModal}>Entrar</button>}
-            {isLoggeedIn && <div className="avatar-button">
-                <div className="avatar" onClick={openModal}>
+            {isLoggeedIn && <div className="avatar-button" ref={dropdownRef}>
+                <div
+                    className="avatar"
+                    onClick={()=>setIsDropdownOpen(!isDropdownOpen)}
+                >
                     <FaUser />
                 </div>
-                <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        className="modal-content"
-        overlayClassName="modal-overlay"
-        
-      >
-        <div className="modal-options">
-          <button className="modal-option">Editar perfil</button>
-          <button className="modal-option">Sair</button>
-        </div>
-      </Modal>
+                {isDropdownOpen && (
+                    <div className="dropdown">
+                        <ul>
+                            <li>Editar perfil</li>
+                            <li>Sair</li>
+                        </ul>
+                    </div>
+                )}
             </div>}
             <Modal
                 isOpen={isLoginModalOpen}
@@ -139,6 +162,15 @@ function Navbar() {
                     </label>
                     <label className="modal-login__label">
                         Email:
+                        <input
+                            className="modal-login__input"
+                            type="email"
+                            // value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </label>
+                    <label className="modal-login__label">
+                        Username:
                         <input
                             className="modal-login__input"
                             type="email"
