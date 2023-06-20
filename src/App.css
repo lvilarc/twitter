@@ -9,7 +9,7 @@
 }
 
 .div-esquerda {
-  width: calc((100% - 700px) / 2);
+  width: calc((100% - 600px) / 2);
   background-color: white;
 }
 
@@ -23,7 +23,7 @@
 .div-central {
   background-color: white;
   margin: 0 auto;
-  width: 700px;
+  width: 600px;
 
   border-left: 2px solid rgba(226, 226, 226, 0.555);
   border-right: 2px solid rgba(226, 226, 226, 0.555);

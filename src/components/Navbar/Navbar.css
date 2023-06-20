@@ -1,5 +1,5 @@
 .div-direita {
-  width: calc((100% - 700px) / 2);
+  width: calc((100% - 600px) / 2);
   background-color: white;
 }
 
@@ -203,8 +203,8 @@
 
 .div-cadastro {
   border-radius: 16px;
-  padding: 64px;
-  width: 560px;
+  padding: 40px;
+  width: 460px;
   /* height: 560px; */
   position: fixed;
   top: 50%;
@@ -228,7 +228,7 @@
 
 .modal-login__title {
   margin-top: 0;
-  font-size: 40px;
+  font-size: 36px;
 }
 
 .modal-login__form {
@@ -239,7 +239,7 @@
 
 .modal-login__label {
   display: block;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .modal-login__input {
@@ -249,13 +249,14 @@
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .modal-login__button {
-  margin-top: 20px;
-  font-size: 24px;
-  height: 58px;
+  margin-top: 18px;
+  font-size: 20px;
+  height: 50px;
+  width: 99%;
   background-color: #1DA1F2;
   color: white;
   border: none;
@@ -267,12 +268,12 @@
 
 
 .modal-login__message {
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 20px;
 }
 
 .modal-login__link {
-  font-size: 24px;
+  font-size: 20px;
   color: #1DA1F2;
   text-decoration: none;
   border: none;
