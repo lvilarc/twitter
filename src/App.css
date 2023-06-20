@@ -1,15 +1,33 @@
 /* .App {
-  margin-top: 60px; 
-} */
+  display: flex;
+  /* justify-content: center; */
+/* } */
+.container {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.div-esquerda {
+  width: calc((100% - 700px) / 2);
+  background-color: white;
+}
+
+.main-content-wrapper {
+  flex: 1;
+  overflow-y: auto; /* habilita a rolagem somente se o conteúdo exceder a altura disponível */
+}
+
+
 
 .div-central {
   background-color: white;
+  margin: 0 auto;
   width: 700px;
-  height: 100vh;
-  margin-left: auto;
-  margin-right: auto;
+
   border-left: 2px solid rgba(226, 226, 226, 0.555);
   border-right: 2px solid rgba(226, 226, 226, 0.555);
+  
 }
 
 

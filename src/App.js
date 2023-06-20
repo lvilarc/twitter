@@ -8,7 +8,8 @@ import fotoPerfil from './foto-perfil.png';
 function App() {
   return (
     <div className="App">
-      {/* <Navbar></Navbar> */}
+      <div className='container'>
+      <div className='div-esquerda'></div>
       <div className="div-central">
         <SearchBar/>
         <TweetHome
@@ -28,7 +29,55 @@ function App() {
         name={'Lucas Vilar'}
         username={'@geraldo'}
         text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+         <TweetHome
+        imageSrc={fotoPerfil}
+        name={'Lucas Vilar'}
+        username={'@geraldo'}
+        text={'Só um texto de twitter'}/>
+     
+      
+     
       </div>
+      <Navbar></Navbar>
+      </div>
+      
+      
+      
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

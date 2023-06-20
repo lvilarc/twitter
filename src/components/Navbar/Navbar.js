@@ -90,9 +90,15 @@ function Navbar() {
     }
 
     return (
-        <nav className="navbar">
-            <button className="navbar-title">Twitter</button>
-            {!isLoggeedIn && <button className="login-button" onClick={openLoginModal}>Entrar</button>}
+        <div className='div-direita'>
+            {!isLoggeedIn && <div className='novo-no-twitter'>
+                <h1 className='text-novo-no-twitter'>Acesse sua conta</h1>
+                <button className='novo-no-twitter-entrar' onClick={openLoginModal}>Entrar</button>
+                <button className='novo-no-twitter-criar-conta' onClick={openCadastroModal}>Criar conta</button>
+            </div>}
+            
+
+            
             {isLoggeedIn && <div className="avatar-button" ref={dropdownRef}>
                 <div
                     className="avatar"
@@ -201,7 +207,8 @@ function Navbar() {
 
             </Modal>
 
-        </nav>
+
+        </div>
     );
 }
 
