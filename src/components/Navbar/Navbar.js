@@ -19,12 +19,16 @@ function Navbar() {
     const [nameValid, setNameValid] = useState(true);
     const [email, setEmail] = useState('');
     const [emailValid, setEmailValid] = useState(true);
+    const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
     const [username, setUsername] = useState('');
     const [usernameValid, setUsernameValid] = useState(true);
     const [usernameAlreadyExists, setUsernameAlreadyExists] = useState(false);
     const [password, setPassword] = useState('');
+    const [passwordValid, setPasswordValid] = useState(true);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [loadingCheckUsername, setLoadingCheckUsername] = useState(false);
+    const [emailLogin, setEmailLogin] = useState('');
+    const [passwordLogin, setPasswordLogin] = useState('');
+ 
 
     const dropdownRef = useRef();
 
@@ -44,6 +48,15 @@ function Navbar() {
         }
 
     });
+
+    const createUser = async (newUser) => {
+        try {
+            const response = await api.post('/users', newUser);
+            console.log(response.data); // Aqui você pode tratar a resposta da API
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
 
 
@@ -80,6 +93,8 @@ function Navbar() {
 
     const closeLoginModal = () => {
         setIsLoginModalOpen(false);
+        setEmailLogin('');
+        setPasswordLogin('');
     };
 
     const openCadastroModal = () => {
@@ -91,11 +106,13 @@ function Navbar() {
         setName('');
         setNameValid(true);
         setEmail('');
+        setEmailAlreadyExists(false);
         setEmailValid(true);
         setUsername('');
         setUsernameAlreadyExists(false);
         setUsernameValid(true);
         setPassword('');
+        setPasswordValid(true);
         // Falta setar algumas coisas
     }
 
@@ -115,18 +132,50 @@ function Navbar() {
         setEmailValid(true); // Reseta o estado de validade do email
     };
 
+    const handleEmailLoginChange = (e) => {
+        setEmailLogin(e.target.value);
+    };
+    
+
     const handleNameChange = (e) => {
         setName(e.target.value);
         setNameValid(true); // Reseta o estado de validade do nome
     };
 
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value.replace(/\s/g, ''));
+        setPasswordValid(true); // Reseta o estado de validade do nome
+    };
+
+    const handlePasswordLoginChange = (e) => {
+        setPasswordLogin(e.target.value.replace(/\s/g, ''));
+    };
+
+    const handleUsernameChange = (e) => {
+        const noSpaces = e.target.value.toLowerCase().replace(/\s/g, '');
+        setUsername(noSpaces);
+        setUsernameAlreadyExists(false); // Reseta a resposta da API ao digitar um novo username
+        setUsernameValid(true);
+
+    };
+
     const handleSubmit = (e) => {
-        let responseData;
+        let resDataCheckUsername;
+        let resDataCheckEmail;
+        let formIsValid = true;
         const checkUsername = async () => {
             try {
-                console.log(username)
                 const response = await api.get(`/users/checkUsername/${username}`);
-                responseData = response.data;
+                resDataCheckUsername = response.data;
+
+            } catch (error) {
+                console.error('Erro ao buscar se usuario ja existe:', error);
+            }
+        };
+        const checkEmail = async () => {
+            try {
+                const response = await api.get(`/users/checkEmail/${email}`);
+                resDataCheckEmail = response.data;
 
             } catch (error) {
                 console.error('Erro ao buscar se usuario ja existe:', error);
@@ -142,36 +191,62 @@ function Navbar() {
         checkUsername();
 
         setTimeout(function () {
-            if (responseData == '1') {
-                setUsernameAlreadyExists(true);
+            if (resDataCheckUsername == '0') {
+                
             }
+            else if (resDataCheckUsername == '1'){
+                setUsernameAlreadyExists(true);
+                formIsValid = false;
+            }
+            else {
+                formIsValid = false;
+            }
+            if (resDataCheckEmail == '0') {
+                
+            }
+            else if (resDataCheckEmail == '1'){
+                setEmailAlreadyExists(true);
+                formIsValid = false;
+            }
+            else {
+                formIsValid = false;
+            }
+
             if (!emailRegex.test(email)) {
                 setEmailValid(false);
+                formIsValid = false;
             }
             if (name.length === 0) {
                 setNameValid(false);
+                formIsValid = false;
             }
-            const regex = /^[a-zA-Z0-9_]{3,16}$/;
-            const isValid = regex.test(username);
-            if(!isValid) {
-                setUsernameValid(isValid);
+            const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
+            const usernameisvalid = usernameRegex.test(username);
+            if (!usernameisvalid) {
+                setUsernameValid(usernameisvalid);
+                formIsValid = false;
             }
-            
+            const passwordRegex = /^.{5,16}$/;
+            const passwordisvalid = passwordRegex.test(password);
+            if (!passwordisvalid) {
+                setPasswordValid(passwordisvalid);
+                formIsValid = false;
+            }
 
-            else {
-                // Email válido, continuar com a lógica do envio do formulário
-                console.log('Email válido:', email);
+            // Confirmação final para enviar para chamar a api
+            if (formIsValid) {
+                const newUser = {
+                    name: name,
+                    email: email,
+                    username: username,
+                    password: password,
+                };
+                createUser(newUser);
             }
         }, 100);
     }
 
-    const handleUsernameChange = (e) => {
-        const noSpaces = e.target.value.toLowerCase().replace(/\s/g, ''); 
-        setUsername(noSpaces);
-        setUsernameAlreadyExists(false); // Reseta a resposta da API ao digitar um novo username
-        setUsernameValid(true);
-        
-    };
+
 
     return (
         <div className='div-direita'>
@@ -219,12 +294,26 @@ function Navbar() {
                             />
                         </label> */}
                         <div className="form__group field">
-                            <input type="input" className="form__field" placeholder="Email" />
-                            <label for="name" className="form__label">Email</label>
+                            <input
+                                type="input"
+                                className="form__field"
+                                placeholder="Email"
+                                id="email-entrar"
+                                onChange={handleEmailLoginChange}
+                                value={emailLogin}
+                            />
+                            <label htmlFor="email-entrar" className="form__label">Email</label>
                         </div>
                         <div className="form__group field">
-                            <input type="input" className="form__field" placeholder="Senha" />
-                            <label for="name" className="form__label">Senha</label>
+                            <input
+                                type="password"
+                                className="form__field"
+                                placeholder="Senha"
+                                id="password-entrar"
+                                onChange={handlePasswordLoginChange}
+                                value={passwordLogin}
+                            />
+                            <label htmlFor="password-entrar" className="form__label">Senha</label>
                         </div>
                         {/* <label className="modal-login__label">
                             Senha:
@@ -270,9 +359,10 @@ function Navbar() {
                                 placeholder="Nome"
                                 value={name}
                                 onChange={handleNameChange}
+                                id="name-cadastro"
                             />
                             {!nameValid && <span className="form__message">Campo em branco</span>}
-                            <label for="name" className="form__label">Nome</label>
+                            <label htmlFor="name-cadastro" className="form__label">Nome</label>
                         </div>
                         {/* <label className="modal-login__label">
                             Email:
@@ -289,9 +379,11 @@ function Navbar() {
                                 className={`form__field ${!emailValid ? 'form__field--invalid' : ''}`}
                                 placeholder="Email" value={email}
                                 onChange={handleEmailChange}
+                                id="email-cadastro"
                             />
+                            {emailAlreadyExists && <span className="form__message">Email já foi usado</span>}
                             {!emailValid && <span className="form__message">Email inválido</span>}
-                            <label for="name" className="form__label">Email</label>
+                            <label htmlFor='email-cadastro' className="form__label">Email</label>
                         </div>
                         {/* <label className="modal-login__label">
                             Username:
@@ -307,10 +399,12 @@ function Navbar() {
                                 className="form__field"
                                 placeholder="Nome de usuário"
                                 value={username}
-                                onChange={handleUsernameChange} />
+                                onChange={handleUsernameChange}
+                                id="username-cadastro"
+                            />
                             {usernameAlreadyExists && <span className="form__message">Usuário já existe</span>}
                             {!usernameValid && <span className="form__message">Letras, números e underscore, 3-16 caracteres.</span>}
-                            <label for="name" className="form__label">Nome de usuário</label>
+                            <label htmlFor='username-cadastro' className="form__label">Nome de usuário</label>
                         </div>
                         {/* <label className="modal-login__label">
                             Senha:
@@ -322,8 +416,16 @@ function Navbar() {
                             />
                         </label> */}
                         <div className="form__group field">
-                            <input type="input" className="form__field" placeholder="Senha" />
-                            <label for="name" className="form__label">Senha</label>
+                            <input
+                                type="password"
+                                className="form__field"
+                                placeholder="Senha"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                id="password-cadastro"
+                            />
+                            {!passwordValid && <span className="form__message">Senha de 5-16 caracteres.</span>}
+                            <label htmlFor='password-cadastro' className="form__label">Senha</label>
                         </div>
                         <button className="modal-login__button" type="submit">Criar conta</button>
                     </form>

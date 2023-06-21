@@ -384,7 +384,7 @@
 .form__group {
   position: relative;
   padding: 15px 0 0;
-  margin-top: 0px;
+  margin-top: -8px;
   width: 100%;
 }
 
