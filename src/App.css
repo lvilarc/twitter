@@ -11,7 +11,72 @@
 .div-esquerda {
   width: calc((100% - 600px) / 2);
   background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  
 }
+
+/* dentro da div-esquerda */
+.botao-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.botao-lista li {
+  margin-bottom: 10px;
+}
+
+.botao-twitter,
+.botao-explorar,
+.botao-seguindo {
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: #f1f1f1;
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.botao-twitter i,
+.botao-explorar i,
+.botao-seguindo i {
+  margin-right: 10px;
+  
+}
+
+.botao-explorar i {
+  font-size: 24px;
+}
+
+.botao-seguindo i {
+  font-size: 22px;
+  margin-right: 12px;
+}
+
+.botao-explorar:hover,
+.botao-seguindo:hover {
+  background-color: #ddd;
+}
+
+.botao-twitter {
+  border-radius: 100%;
+  padding: 14px;
+}
+
+
+.tres-icones {
+  margin-right: 10px;
+}
+/* fim da div-esquerda */
+
 
 .main-content-wrapper {
   flex: 1;

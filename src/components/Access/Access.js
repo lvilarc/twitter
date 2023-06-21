@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import './Navbar.css';
+import './Access.css';
 import { FaUser, FaCog, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import api from '../../service/api';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-function Navbar() {
+function Access() {
 
 
     const [isLoggeedIn, setIsLoggedIn] = useState(false);
@@ -441,4 +441,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default Access;
