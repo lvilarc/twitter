@@ -39,10 +39,15 @@
   padding-right: 20px;
   border: none;
   border-radius: 25px;
-  background-color: #f1f1f1;
+  background-color: white;
   color: #333;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
+}
+
+.botao-twitter {
+  color: #1DA1F2;
+  font-size: 50px;
 }
 
 .botao-twitter i,
@@ -61,19 +66,17 @@
   margin-right: 12px;
 }
 
+
 .botao-explorar:hover,
 .botao-seguindo:hover {
   background-color: #ddd;
 }
 
-.botao-twitter {
-  border-radius: 100%;
-  padding: 14px;
-}
+
 
 
 .tres-icones {
-  margin-right: 10px;
+  margin-right: 20px;
 }
 /* fim da div-esquerda */
 
