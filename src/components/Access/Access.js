@@ -28,7 +28,7 @@ function Access() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [emailLogin, setEmailLogin] = useState('');
     const [passwordLogin, setPasswordLogin] = useState('');
- 
+
 
     const dropdownRef = useRef();
 
@@ -130,12 +130,13 @@ function Access() {
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         setEmailValid(true); // Reseta o estado de validade do email
+        setEmailAlreadyExists(false);
     };
 
     const handleEmailLoginChange = (e) => {
         setEmailLogin(e.target.value);
     };
-    
+
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -174,7 +175,9 @@ function Access() {
         };
         const checkEmail = async () => {
             try {
-                const response = await api.get(`/users/checkEmail/${email}`);
+                const response = await api.post('/user/checkEmail', {
+                    email: email
+                });
                 resDataCheckEmail = response.data;
 
             } catch (error) {
@@ -189,12 +192,13 @@ function Access() {
         // Verificação de regex de email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         checkUsername();
+        checkEmail();
 
         setTimeout(function () {
             if (resDataCheckUsername == '0') {
-                
+
             }
-            else if (resDataCheckUsername == '1'){
+            else if (resDataCheckUsername == '1') {
                 setUsernameAlreadyExists(true);
                 formIsValid = false;
             }
@@ -202,9 +206,9 @@ function Access() {
                 formIsValid = false;
             }
             if (resDataCheckEmail == '0') {
-                
+
             }
-            else if (resDataCheckEmail == '1'){
+            else if (resDataCheckEmail == '1') {
                 setEmailAlreadyExists(true);
                 formIsValid = false;
             }
