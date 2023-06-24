@@ -28,7 +28,7 @@
   font-weight: bold;
   border: 1px solid rgba(148, 148, 148, 0.555);
   margin-bottom: 20px;
-  
+
 }
 
 .novo-no-twitter-criar-conta:hover {
@@ -36,7 +36,7 @@
   background-color: rgba(226, 226, 226, 0.555);
 }
 
-.novo-no-twitter-entrar{
+.novo-no-twitter-entrar {
   margin-left: 26px;
   border-radius: 25px;
   border-style: none;
@@ -48,7 +48,7 @@
   font-weight: bold;
   border: 1px solid #1DA1F2;
   margin-bottom: 20px;
-  
+
 }
 
 .novo-no-twitter-entrar:hover {
@@ -106,8 +106,9 @@
 
 
 .dropdown {
-  position: absolute;
-  top: 54px;
+  margin-top: 10px;
+  margin-left: 40px;
+  position: relative;
   margin-right: 24vw;
   right: 0;
   background-color: #ffffff;
@@ -115,6 +116,7 @@
   border-radius: 4px;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: inline-block;
 }
 
 .dropdown ul {
@@ -127,6 +129,7 @@
   padding: 8px 12px;
   cursor: pointer;
   color: #000000;
+  white-space: nowrap;
   /* Cor do texto preta */
 }
 
@@ -135,6 +138,8 @@
 .dropdown li:hover {
   background-color: #f8f8f8;
 }
+
+
 
 /* extra */
 
@@ -146,10 +151,32 @@
 
 /* extra */
 
+.div-login-avatar {
+  margin-left: 30px;
+  margin-top: 30px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.login-avatar {
+
+  
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  
+
+}
+
 .avatar {
   /* display: flex; */
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   margin-right: 27vw;
   /* margin-left: auto; */
   /* margin-right: 234px; */
@@ -404,7 +431,7 @@
     color: transparent;
   }
 
-  &:placeholder-shown ~ .form__label {
+  &:placeholder-shown~.form__label {
     font-size: 1.3rem;
     cursor: text;
     top: 20px;
@@ -421,7 +448,7 @@
 }
 
 .form__field:focus {
-  ~ .form__label {
+  ~.form__label {
     position: absolute;
     top: 0;
     display: block;
@@ -430,6 +457,7 @@
     color: var(--primary);
     font-weight: 500;
   }
+
   padding-bottom: 6px;
   font-weight: 500;
   border-width: 3px;

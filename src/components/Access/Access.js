@@ -3,6 +3,7 @@ import './Access.css';
 import { FaUser, FaCog, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import api from '../../service/api';
 import axios from 'axios';
+import fotoPerfil from '../../foto-perfil.png';
 
 import Modal from 'react-modal';
 
@@ -28,9 +29,36 @@ function Access() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [emailLogin, setEmailLogin] = useState('');
     const [passwordLogin, setPasswordLogin] = useState('');
+    const [showAccess, setShowAccess] = useState(false);
+    const [loginValid, setLoginValid] = useState(true);
 
 
     const dropdownRef = useRef();
+
+    const checkSession = () => {
+        // Verificar se há um token armazenado no Local Storage
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            // Verificar se o token é válido (por exemplo, verificando sua expiração)
+
+            setIsLoggedIn(true);
+            // Se o token for válido, você pode atualizar o estado do aplicativo para indicar que o usuário está logado
+            // Por exemplo: dispatch(setUserLoggedIn(true));
+
+            // Caso contrário, você pode chamar a função de logout para limpar o token do Local Storage
+            // logout();
+        } else {
+            setShowAccess(true);
+            // O token não está presente no Local Storage ou não é válido
+            // Você pode atualizar o estado do aplicativo para indicar que o usuário não está logado
+            // Por exemplo: dispatch(setUserLoggedIn(false));
+        }
+    };
+
+    useEffect(() => {
+        checkSession();
+    }, []);
 
     useEffect(() => {
         if (isDropdownOpen) {
@@ -46,15 +74,47 @@ function Access() {
                 document.removeEventListener("mousedown", handler);
             }
         }
-
     });
+
 
     const createUser = async (newUser) => {
         try {
             const response = await api.post('/users', newUser);
-            console.log(response.data); // Aqui você pode tratar a resposta da API
+            console.log(response.status);
+            if (response.status = 200) {
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                setIsLoggedIn(true);
+                setShowAccess(false);
+                window.location.reload();
+            }
+
+
+
         } catch (error) {
             console.error(error);
+        }
+    }
+
+    const login = async (user) => {
+        try {
+            console.log(user)
+            const response = await api.post('/login', user);
+            console.log(response.status);
+            if (response.status = 200) {
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                setIsLoggedIn(true);
+                setShowAccess(false);
+                window.location.reload();
+            } 
+
+
+
+        } catch (error) {
+            console.error(error);
+            console.log('entrou aqui')
+            setLoginValid(false);
         }
     }
 
@@ -67,13 +127,6 @@ function Access() {
 
 
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        // Lógica de login aqui
-        console.log('Email:', email);
-        console.log('Senha:', password);
-        closeModal();
-    };
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -84,7 +137,8 @@ function Access() {
     };
 
     const handleLogout = () => {
-        // Lógica de logout
+        localStorage.removeItem('token');
+        window.location.reload();
     };
 
     const openLoginModal = () => {
@@ -127,6 +181,8 @@ function Access() {
 
     }
 
+
+
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         setEmailValid(true); // Reseta o estado de validade do email
@@ -135,6 +191,7 @@ function Access() {
 
     const handleEmailLoginChange = (e) => {
         setEmailLogin(e.target.value);
+        setLoginValid(true);
     };
 
 
@@ -150,6 +207,7 @@ function Access() {
 
     const handlePasswordLoginChange = (e) => {
         setPasswordLogin(e.target.value.replace(/\s/g, ''));
+        setLoginValid(true);
     };
 
     const handleUsernameChange = (e) => {
@@ -158,6 +216,16 @@ function Access() {
         setUsernameAlreadyExists(false); // Reseta a resposta da API ao digitar um novo username
         setUsernameValid(true);
 
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const user = {
+            email: emailLogin,
+            password: passwordLogin
+        }
+        login(user);
+        
     };
 
     const handleSubmit = (e) => {
@@ -254,7 +322,7 @@ function Access() {
 
     return (
         <div className='div-direita'>
-            {!isLoggeedIn && <div className='novo-no-twitter'>
+            {showAccess && <div className='novo-no-twitter'>
                 <h1 className='text-novo-no-twitter'>Acesse sua conta</h1>
                 <button className='novo-no-twitter-entrar' onClick={openLoginModal}>Entrar</button>
                 <button className='novo-no-twitter-criar-conta' onClick={openCadastroModal}>Criar conta</button>
@@ -262,18 +330,22 @@ function Access() {
 
 
 
-            {isLoggeedIn && <div className="avatar-button" ref={dropdownRef}>
+            {isLoggeedIn && <div className='div-login-avatar' ref={dropdownRef} >
                 <div
                     className="avatar"
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                   
                 >
-                    <FaUser />
+                    
+                    <img src={fotoPerfil} className="login-avatar"  onClick={() => setIsDropdownOpen(!isDropdownOpen)}/>
+                    
+                    
                 </div>
                 {isDropdownOpen && (
                     <div className="dropdown">
+                        
                         <ul>
                             <li>Editar perfil</li>
-                            <li>Sair</li>
+                            <li onClick={handleLogout}>Sair</li>
                         </ul>
                     </div>
                 )}
@@ -317,6 +389,7 @@ function Access() {
                                 onChange={handlePasswordLoginChange}
                                 value={passwordLogin}
                             />
+                            {!loginValid && <span className="form__message">Usuário ou senha incorretos</span>}
                             <label htmlFor="password-entrar" className="form__label">Senha</label>
                         </div>
                         {/* <label className="modal-login__label">
