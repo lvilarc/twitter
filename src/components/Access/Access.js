@@ -367,7 +367,7 @@ function Access() {
 
 
                     {user && user.photo ? (
-                        <img src={`http://192.168.0.13:3333/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
+                        <img src={`http://192.168.0.100:3333/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     ) : (
                         <img src={fotoPerfil} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     )}
