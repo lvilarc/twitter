@@ -107,16 +107,18 @@
 
 .dropdown {
   margin-top: 10px;
-  margin-left: 40px;
+  margin-left: 0px;
   position: relative;
   margin-right: 24vw;
   right: 0;
   background-color: #ffffff;
   border: 1px solid #dddddd;
-  border-radius: 4px;
+  border-radius: 25px;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .dropdown ul {
@@ -126,17 +128,21 @@
 }
 
 .dropdown li {
+  border-radius: 25px;
   padding: 8px 12px;
   cursor: pointer;
-  color: #000000;
+  color: #424242; /* Cor do texto no Twitter */
   white-space: nowrap;
-  /* Cor do texto preta */
 }
 
+.li-editarperfil:hover {
+  background-color: #f8f8f8; /* Cor de fundo no hover no Twitter */
+  color: #1DA1F2; /* Cor do texto no hover no Twitter */
+}
 
-
-.dropdown li:hover {
-  background-color: #f8f8f8;
+.li-sair:hover {
+  background-color: #f8f8f8; /* Cor de fundo no hover no Twitter */
+  color: #e0245e /* Cor do texto no hover no Twitter */
 }
 
 
@@ -152,10 +158,10 @@
 /* extra */
 
 .div-login-avatar {
-  margin-left: 30px;
-  margin-top: 30px;
-  width: 80px;
-  height: 80px;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
 
   cursor: pointer;
@@ -165,8 +171,8 @@
 .login-avatar {
 
   
-  width: 80px;
-  height: 80px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
   

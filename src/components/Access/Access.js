@@ -11,7 +11,8 @@ Modal.setAppElement('#root');
 
 function Access() {
 
-
+    const [user, setUser] = useState();
+    const [forceUpdate, setForceUpdate] = useState(0);
     const [isLoggeedIn, setIsLoggedIn] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -35,20 +36,46 @@ function Access() {
 
     const dropdownRef = useRef();
 
+
+    const getDetails = async (token) => {
+        try {
+            const response = await api.get('/auth/getDetails', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data.user);
+            setIsLoggedIn(true);
+
+
+        } catch (error) {
+            
+            setIsLoggedIn(false);
+            setShowAccess(true);
+            
+
+        }
+    }
+
     const checkSession = () => {
         // Verificar se há um token armazenado no Local Storage
         const token = localStorage.getItem('token');
 
         if (token) {
+            getDetails(token);
+
+
+
             // Verificar se o token é válido (por exemplo, verificando sua expiração)
 
-            setIsLoggedIn(true);
+            
             // Se o token for válido, você pode atualizar o estado do aplicativo para indicar que o usuário está logado
             // Por exemplo: dispatch(setUserLoggedIn(true));
 
             // Caso contrário, você pode chamar a função de logout para limpar o token do Local Storage
             // logout();
         } else {
+            setIsLoggedIn(false)
             setShowAccess(true);
             // O token não está presente no Local Storage ou não é válido
             // Você pode atualizar o estado do aplicativo para indicar que o usuário não está logado
@@ -107,7 +134,7 @@ function Access() {
                 setIsLoggedIn(true);
                 setShowAccess(false);
                 window.location.reload();
-            } 
+            }
 
 
 
@@ -149,6 +176,7 @@ function Access() {
         setIsLoginModalOpen(false);
         setEmailLogin('');
         setPasswordLogin('');
+        setLoginValid(true);
     };
 
     const openCadastroModal = () => {
@@ -225,7 +253,7 @@ function Access() {
             password: passwordLogin
         }
         login(user);
-        
+
     };
 
     const handleSubmit = (e) => {
@@ -333,19 +361,26 @@ function Access() {
             {isLoggeedIn && <div className='div-login-avatar' ref={dropdownRef} >
                 <div
                     className="avatar"
-                   
+
                 >
-                    
-                    <img src={fotoPerfil} className="login-avatar"  onClick={() => setIsDropdownOpen(!isDropdownOpen)}/>
-                    
-                    
+
+
+
+                    {user && user.photo ? (
+                        <img src={`http://192.168.0.13:3333/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
+                    ) : (
+                        <img src={fotoPerfil} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
+                    )}
+
+
+
                 </div>
                 {isDropdownOpen && (
                     <div className="dropdown">
-                        
+
                         <ul>
-                            <li>Editar perfil</li>
-                            <li onClick={handleLogout}>Sair</li>
+                            <li className='li-editarperfil'>Editar perfil</li>
+                            <li onClick={handleLogout} className='li-sair'>Sair</li>
                         </ul>
                     </div>
                 )}
@@ -389,7 +424,7 @@ function Access() {
                                 onChange={handlePasswordLoginChange}
                                 value={passwordLogin}
                             />
-                            {!loginValid && <span className="form__message">Usuário ou senha incorretos</span>}
+                            {!loginValid && <span className="form__message">Email ou senha incorretos</span>}
                             <label htmlFor="password-entrar" className="form__label">Senha</label>
                         </div>
                         {/* <label className="modal-login__label">
