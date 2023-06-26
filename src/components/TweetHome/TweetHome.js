@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './TweetHome.css';
 
+
+
 const TweetHome = ({ imageSrc, name, username, text, imageSrcTweet, timeElapsed }) => {
+
+
+
     return (
         <div className="Tweet">
             <div className="tweet-avatar-container">
@@ -15,7 +20,8 @@ const TweetHome = ({ imageSrc, name, username, text, imageSrcTweet, timeElapsed 
                 </div>
 
                 <a className="tweet-text">{text}</a>
-                <img src={imageSrcTweet} className='tweet-image'/>
+                <img src={imageSrcTweet} className='tweet-image' />
+
             </div>
         </div>
 

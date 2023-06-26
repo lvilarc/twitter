@@ -47,17 +47,20 @@ function App() {
     
   }, [showMyPerfil]);
 
+
+  const indexTweets = async () => {
+    try {
+      const response = await api.get('/tweets');
+      setTweets([...response.data.tweets].reverse());
+      console.log(response.data.tweets)
+
+    } catch (error) {
+
+    }
+  };
+
   useEffect(() => {
-    const indexTweets = async () => {
-      try {
-        const response = await api.get('/tweets');
-        setTweets([...response.data.tweets].reverse());
-        console.log(response.data.tweets)
-
-      } catch (error) {
-
-      }
-    };
+   
 
     
 
@@ -71,6 +74,21 @@ function App() {
     console.log(user)
   }, []);
 
+  useEffect(()=> {
+    if(title === 'Explorar') {
+      indexTweets();
+    }
+    
+  }, [title])
+
+
+  const handleExplorar = () => {
+    setTitle('Explorar');
+    setShowMyPerfil(false);
+    
+    
+  }
+
   return (
   
     <div className="App">
@@ -83,7 +101,7 @@ function App() {
               </button>
             </li>
             <li>
-              <button className="botao-explorar">
+              <button className="botao-explorar" onClick={handleExplorar}>
                 <FaSearch className='tres-icones' />
                 Explorar
               </button>
@@ -109,6 +127,7 @@ function App() {
             imageSrc={`http://192.168.0.13:3333/uploads/${user.photo}`}
             name={user.name}
             username={`@${user.username}`}
+            user={user}
             ></Perfil>
           )}
       

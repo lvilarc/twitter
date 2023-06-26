@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Perfil.css';
 import { FaTimes, FaCamera } from 'react-icons/fa';
 import { FiUpload } from 'react-icons/fi';
@@ -7,19 +7,41 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-const Perfil = ({ imageSrc, name, username }) => {
+const Perfil = ({ user, imageSrc, name, username }) => {
 
     const [isEditPerfilModalOpen, setIsEditPerfilModalOpen] = useState(false);
 
     const [selectedImage, setSelectedImage] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
 
+    const [nameValue, setNameValue] = useState('');
+    const [usernameValue, setUsernameValue] = useState('');
+
+
+    useEffect(() => {
+        setNameValue(user.name);
+        setUsernameValue(user.username);
+    }, [])
+
     const openEditPerfilModal = () => {
         setIsEditPerfilModalOpen(true);
     }
 
     const closeEditPerfilModal = () => {
+        setSelectedImage(null)
+        setImagePreview('');
+        setNameValue(user.name);
+        setUsernameValue(user.username);
         setIsEditPerfilModalOpen(false);
+    }
+
+    const handleUsernameValueChange = (event) => {
+        let value = event.target.value.toLowerCase()
+        value = value.replace(/\s/g, '');
+        setUsernameValue(value);
+    }
+    const handleNameValueChange = (event) => {
+        setNameValue(event.target.value);
     }
 
     const handleImageChange = (event) => {
@@ -65,11 +87,23 @@ const Perfil = ({ imageSrc, name, username }) => {
                                 className="form__field"
                                 placeholder="Email"
                                 id="name-edit-perfil"
-                                // onChange={handleEmailLoginChange}
-                                // value={emailLogin}
+                                onChange={handleNameValueChange}
+                                value={nameValue}
                                 style={{ marginBottom: '20px' }}
                             />
                             <label htmlFor="name-edit-perfil" className="form__label">Nome</label>
+                        </div>
+                        <div className="form__group field">
+                            <input
+                                type="input"
+                                className="form__field"
+                                placeholder="Email"
+                                id="name-edit-perfil"
+                                onChange={handleUsernameValueChange}
+                                value={usernameValue}
+                                style={{ marginBottom: '20px' }}
+                            />
+                            <label htmlFor="name-edit-perfil" className="form__label">Username</label>
                         </div>
                         <h2 className='foto-de-perfil-label'>Foto de perfil</h2>
                         {selectedImage ? (
