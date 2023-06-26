@@ -1,7 +1,7 @@
 import React from 'react';
 import './TweetHome.css';
 
-const TweetHome = ({ imageSrc, name, username, text }) => {
+const TweetHome = ({ imageSrc, name, username, text, imageSrcTweet }) => {
     return (
         <div className="Tweet">
             <div className="tweet-avatar-container">
@@ -15,6 +15,7 @@ const TweetHome = ({ imageSrc, name, username, text }) => {
                 </div>
 
                 <a className="tweet-text">{text}</a>
+                <img src={imageSrcTweet} />
             </div>
         </div>
 

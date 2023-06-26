@@ -24,7 +24,7 @@ function App() {
       try {
         const response = await api.get('/tweets');
         setTweets(response.data.tweets);
-        console.log(response.data.tweets[0].User)
+        console.log(response.data.tweets)
   
   
   
@@ -78,6 +78,7 @@ function App() {
               name={tweet.User.name}
               text={tweet.text}
               username={`@${tweet.User.username}`}
+              imageSrcTweet={tweet.tweetPhoto ? `http://192.168.0.100:3333/uploads/${tweet.tweetPhoto}` : ''}
             />
           ))}
           <TweetHome
