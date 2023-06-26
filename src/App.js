@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import Access from './components/Access/Access';
+import Perfil from './components/Perfil/Perfil';
 import SearchBar from './components/SearchBar/SearchBar';
 import TweetHome from './components/TweetHome/TweetHome';
 import fotoPerfil from './foto-perfil.png';
@@ -12,12 +13,17 @@ function App() {
 
   const [isLoggeedIn, setIsLoggedIn] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [tweets, setTweets] = useState(null);
+  const [showMyPerfil, setShowMyPerfil] = useState(false);
+
+  const handleEditarPerfil = () => {
+
+  }
 
 
 
-  
+
 
   useEffect(() => {
     const indexTweets = async () => {
@@ -25,18 +31,19 @@ function App() {
         const response = await api.get('/tweets');
         setTweets([...response.data.tweets].reverse());
         console.log(response.data.tweets)
-  
-  
-  
+
+
+
       } catch (error) {
-  
-  
-  
-  
+
+
+
+
       }
     };
 
     indexTweets();
+    console.log(user)
   }, []);
 
   return (
@@ -70,19 +77,28 @@ function App() {
             setIsLoginModalOpen={setIsLoginModalOpen}
           />
 
+          {user !== null && showMyPerfil && (
+            <Perfil
+            imageSrc={`http://192.168.0.13:3333/uploads/${user.photo}`}
+            name={user.name}
+            username={`@${user.username}`}
+            ></Perfil>
+          )}
+      
 
+      
           {tweets !== null && tweets.reverse().map(tweet => (
             <TweetHome
               key={tweet.id}
-              imageSrc={`http://192.168.0.100:3333/uploads/${tweet.User.photo}`}
+              imageSrc={`http://192.168.0.13:3333/uploads/${tweet.User.photo}`}
               name={tweet.User.name}
               text={tweet.text}
               username={`@${tweet.User.username}`}
-              imageSrcTweet={tweet.tweetPhoto ? `http://192.168.0.100:3333/uploads/${tweet.tweetPhoto}` : ''}
+              imageSrcTweet={tweet.tweetPhoto ? `http://192.168.0.13:3333/uploads/${tweet.tweetPhoto}` : ''}
               timeElapsed={tweet.timeElapsed}
             />
           ))}
-          
+
 
 
 
@@ -93,7 +109,9 @@ function App() {
           isLoggeedIn={isLoggeedIn}
           setIsLoggedIn={setIsLoggedIn}
           isLoginModalOpen={isLoginModalOpen}
-          setIsLoginModalOpen={setIsLoginModalOpen}>
+          setIsLoginModalOpen={setIsLoginModalOpen}
+          setShowMyPerfil={setShowMyPerfil}>
+            
         </Access>
       </div>
 

@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen}) {
+function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen, setShowMyPerfil}) {
 
     // const [user, setUser] = useState();
     const [forceUpdate, setForceUpdate] = useState(0);
@@ -43,6 +43,7 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
                     Authorization: `Bearer ${token}`
                 }
             });
+            console.log(response.data.user)
             setUser(response.data.user);
             setIsLoggedIn(true);
 
@@ -162,10 +163,17 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
         setIsModalOpen(false);
     };
 
+    const handleEditarPerfil = () => {
+        
+        setShowMyPerfil(true);
+    }
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         window.location.reload();
     };
+
+    
 
     const openLoginModal = () => {
         setIsLoginModalOpen(true);
@@ -366,7 +374,7 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
 
 
                     {user && user.photo ? (
-                        <img src={`http://192.168.0.100:3333/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
+                        <img src={`http://192.168.0.13:3333/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     ) : (
                         <img src={fotoPerfil} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     )}
@@ -378,7 +386,7 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
                     <div className="dropdown">
 
                         <ul>
-                            <li className='li-editarperfil'>Editar perfil</li>
+                            <li className='li-editarperfil' onClick={handleEditarPerfil}>Editar perfil</li>
                             <li onClick={handleLogout} className='li-sair'>Sair</li>
                         </ul>
                     </div>
