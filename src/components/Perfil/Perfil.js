@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Perfil.css';
 import { FaTimes, FaCamera } from 'react-icons/fa';
 import { FiUpload } from 'react-icons/fi';
+import api from '../../service/api';
 
 import Modal from 'react-modal';
 
@@ -17,6 +18,67 @@ const Perfil = ({ user, imageSrc, name, username }) => {
     const [nameValue, setNameValue] = useState('');
     const [usernameValue, setUsernameValue] = useState('');
 
+    const [salvarValid, setSalvarValid] = useState(true);
+
+    const updateUser = async (updateUserData) => {
+        try {
+          // console.log(newTweet);
+          if (selectedImage == null) {
+            const response = await api.post(`/tweets/user/${user.id}`, updateUserData) // Tem que mudar as rotas
+            // window.location.reload();
+          } else {
+            
+            const response = await api.post(`tweets/image/user/${user.id}`, updateUserData, { // Tem que mudar as rotas
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+            // console.log(response)
+            // window.location.reload();
+          }
+    
+          // console.log(response.status);
+          // if (response.status = 200) {
+    
+    
+    
+          // }
+    
+    
+    
+        } catch (error) {
+          console.error(error);
+        }
+    }
+
+    const handleUpdateSubmit = (event) => {
+        event.preventDefault();
+        if (nameValue == ' ' || nameValue.length < 1 || usernameValue.length < 3) {
+          //Aparecer campo invalido
+          setSalvarValid(false);
+        } else {
+          let updateUserData
+          if (selectedImage == null) {
+            updateUserData = {
+              name: nameValue,
+              username: usernameValue
+            }
+          } else {
+            updateUserData = new FormData();
+            updateUserData.append('text', updateUserData);
+            updateUserData.append('file', selectedImage);
+          }
+    
+    
+          console.log(updateUserData);
+          updateUser(updateUserData);
+          setIsEditPerfilModalOpen(false)
+          // setTimeout(function() {
+          //   window.location.reload();
+          // }, 100);
+        }
+    
+      }
 
     useEffect(() => {
         setNameValue(user.name);
@@ -149,7 +211,7 @@ const Perfil = ({ user, imageSrc, name, username }) => {
                         <button
                             type="submit"
                             className='modal-login__button'
-                        // onClick={handleTweetSubmit}
+                        onClick={handleUpdateSubmit}
                         >
                             Salvar</button>
                     </form>
