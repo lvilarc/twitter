@@ -28,6 +28,7 @@
   font-weight: bold;
   border: 1px solid rgba(148, 148, 148, 0.555);
   margin-bottom: 20px;
+  transition: background-color 0.3s ease;
 
 }
 
@@ -48,6 +49,7 @@
   font-weight: bold;
   border: 1px solid #1DA1F2;
   margin-bottom: 20px;
+  transition: background-color 0.3s ease;
 
 }
 
@@ -296,6 +298,7 @@
   padding: 10px 15px;
   border-radius: 50px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 

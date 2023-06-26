@@ -39,10 +39,13 @@
   padding-right: 20px;
   border: none;
   border-radius: 25px;
-  background-color: white;
+  /* background-color: white; */
   color: #333;
   font-size: 24px;
   cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+
 }
 
 .botao-twitter {

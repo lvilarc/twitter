@@ -3,11 +3,11 @@
   padding-bottom: 8px;
   display: flex;
   align-items: center;
-  padding-left: 10px;
+  padding-left: 12px;
   padding-right: 10px;
 
 
-  border-bottom: 2px solid rgba(226, 226, 226, 0.555);
+  /* border-bottom: 2px solid rgba(226, 226, 226, 0.555); */
 }
 
 .div-explorar {
@@ -54,6 +54,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: background-color 0.3s ease;
 }
 
 .search-bar button:hover {

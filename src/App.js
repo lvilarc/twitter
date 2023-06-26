@@ -23,7 +23,7 @@ function App() {
     const indexTweets = async () => {
       try {
         const response = await api.get('/tweets');
-        setTweets(response.data.tweets);
+        setTweets([...response.data.tweets].reverse());
         console.log(response.data.tweets)
   
   
@@ -71,7 +71,7 @@ function App() {
           />
 
 
-          {tweets !== null && tweets.map(tweet => (
+          {tweets !== null && tweets.reverse().map(tweet => (
             <TweetHome
               key={tweet.id}
               imageSrc={`http://192.168.0.100:3333/uploads/${tweet.User.photo}`}
@@ -79,53 +79,10 @@ function App() {
               text={tweet.text}
               username={`@${tweet.User.username}`}
               imageSrcTweet={tweet.tweetPhoto ? `http://192.168.0.100:3333/uploads/${tweet.tweetPhoto}` : ''}
+              timeElapsed={tweet.timeElapsed}
             />
           ))}
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            username={'@geraldo'}
-            text={'Só um texto de twitter'} />
+          
 
 
 

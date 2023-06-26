@@ -1,7 +1,7 @@
 import React from 'react';
 import './TweetHome.css';
 
-const TweetHome = ({ imageSrc, name, username, text, imageSrcTweet }) => {
+const TweetHome = ({ imageSrc, name, username, text, imageSrcTweet, timeElapsed }) => {
     return (
         <div className="Tweet">
             <div className="tweet-avatar-container">
@@ -11,11 +11,11 @@ const TweetHome = ({ imageSrc, name, username, text, imageSrcTweet }) => {
                 <div>
                     <a className="tweet-name">{name}</a>
                     <a className="tweet-username">{username}</a>
-                    <a className="tweet-username">· 2 h</a>
+                    <a className="tweet-username">{'· ' + timeElapsed}</a>
                 </div>
 
                 <a className="tweet-text">{text}</a>
-                <img src={imageSrcTweet} />
+                <img src={imageSrcTweet} className='tweet-image'/>
             </div>
         </div>
 
