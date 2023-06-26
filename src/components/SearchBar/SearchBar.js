@@ -8,10 +8,10 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-const SearchBar = ({ user, isLoggeedIn, setIsLoginModalOpen, onChange, onSearch }) => {
+const SearchBar = ({ title, user, isLoggeedIn, setIsLoginModalOpen, onChange, onSearch }) => {
 
 
-  const [aba, setAba] = useState('Explorar');
+
   const [tweetText, setTweetText] = useState('');
 
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
@@ -123,9 +123,9 @@ const SearchBar = ({ user, isLoggeedIn, setIsLoginModalOpen, onChange, onSearch 
   return (
     <div className="search-bar">
       <div className='div-explorar'>
-        <a>{aba}</a>
+        <a>{title}</a>
       </div>
-      <input
+      {/* <input
         type="text"
         placeholder="Pesquisar"
         onChange={onChange}
@@ -133,7 +133,7 @@ const SearchBar = ({ user, isLoggeedIn, setIsLoginModalOpen, onChange, onSearch 
 
       <button type="button" onClick={onSearch}>
         <FaSearch />
-      </button>
+      </button> */}
       <button type="button" onClick={openWriteModal}>
 
         <FiEdit />

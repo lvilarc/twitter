@@ -4,11 +4,12 @@ import { FaUser, FaCog, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import api from '../../service/api';
 import fotoPerfil from '../../foto-perfil.png';
 
+
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen, setShowMyPerfil}) {
+function Access({ setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen, setShowMyPerfil }) {
 
     // const [user, setUser] = useState();
     const [forceUpdate, setForceUpdate] = useState(0);
@@ -49,10 +50,10 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
 
 
         } catch (error) {
-            
+
             setIsLoggedIn(false);
             setShowAccess(true);
-            
+
 
         }
     }
@@ -68,7 +69,7 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
 
             // Verificar se o token é válido (por exemplo, verificando sua expiração)
 
-            
+
             // Se o token for válido, você pode atualizar o estado do aplicativo para indicar que o usuário está logado
             // Por exemplo: dispatch(setUserLoggedIn(true));
 
@@ -164,7 +165,8 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
     };
 
     const handleEditarPerfil = () => {
-        
+        setIsDropdownOpen(false);
+        setTitle('Meu perfil');
         setShowMyPerfil(true);
     }
 
@@ -173,7 +175,7 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
         window.location.reload();
     };
 
-    
+
 
     const openLoginModal = () => {
         setIsLoginModalOpen(true);
@@ -386,7 +388,10 @@ function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, se
                     <div className="dropdown">
 
                         <ul>
+
                             <li className='li-editarperfil' onClick={handleEditarPerfil}>Editar perfil</li>
+
+
                             <li onClick={handleLogout} className='li-sair'>Sair</li>
                         </ul>
                     </div>

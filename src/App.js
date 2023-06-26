@@ -9,6 +9,7 @@ import api from './service/api'
 import { useState, useEffect } from 'react';
 import { FaTwitter, FaSearch, FaUserFriends } from 'react-icons/fa';
 
+
 function App() {
 
   const [isLoggeedIn, setIsLoggedIn] = useState(false);
@@ -16,14 +17,35 @@ function App() {
   const [user, setUser] = useState(null);
   const [tweets, setTweets] = useState(null);
   const [showMyPerfil, setShowMyPerfil] = useState(false);
-
-  const handleEditarPerfil = () => {
-
-  }
+  const [title, setTitle] = useState('Explorar');
 
 
 
+  useEffect(() => {
+    const indexTweetsUser = async () => {
+      try {
+        console.log(user.id)
+        const response = await api.get(`/tweet/user/${user.id}`);
+        console.log('response' + response)
+        setTweets([...response.data.tweets].reverse());
+        console.log(response.data.tweets)
 
+      } catch (error) {
+
+      }
+    };
+
+    
+
+  
+      indexTweetsUser();
+ 
+    
+    
+
+    
+    
+  }, [showMyPerfil]);
 
   useEffect(() => {
     const indexTweets = async () => {
@@ -32,21 +54,25 @@ function App() {
         setTweets([...response.data.tweets].reverse());
         console.log(response.data.tweets)
 
-
-
       } catch (error) {
-
-
-
 
       }
     };
 
-    indexTweets();
+    
+
+  
+      indexTweets();
+ 
+    
+    
+
+    
     console.log(user)
   }, []);
 
   return (
+  
     <div className="App">
       <div className='container'>
         <div className='div-esquerda'>
@@ -72,6 +98,7 @@ function App() {
         </div>
         <div className="div-central">
           <SearchBar
+            title={title}
             user={user}
             isLoggeedIn={isLoggeedIn}
             setIsLoginModalOpen={setIsLoginModalOpen}
@@ -110,7 +137,8 @@ function App() {
           setIsLoggedIn={setIsLoggedIn}
           isLoginModalOpen={isLoginModalOpen}
           setIsLoginModalOpen={setIsLoginModalOpen}
-          setShowMyPerfil={setShowMyPerfil}>
+          setShowMyPerfil={setShowMyPerfil}
+          setTitle={setTitle}>
             
         </Access>
       </div>
@@ -131,7 +159,9 @@ function App() {
           Learn React
         </a>
       </header> */}
+      
     </div>
+ 
   );
 }
 
