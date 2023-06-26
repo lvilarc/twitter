@@ -4,9 +4,41 @@ import Access from './components/Access/Access';
 import SearchBar from './components/SearchBar/SearchBar';
 import TweetHome from './components/TweetHome/TweetHome';
 import fotoPerfil from './foto-perfil.png';
+import api from './service/api'
+import { useState, useEffect } from 'react';
 import { FaTwitter, FaSearch, FaUserFriends } from 'react-icons/fa';
 
 function App() {
+
+  const [isLoggeedIn, setIsLoggedIn] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [user, setUser] = useState();
+  const [tweets, setTweets] = useState(null);
+
+
+
+  
+
+  useEffect(() => {
+    const indexTweets = async () => {
+      try {
+        const response = await api.get('/tweets');
+        setTweets(response.data.tweets);
+        console.log(response.data.tweets[0].User)
+  
+  
+  
+      } catch (error) {
+  
+  
+  
+  
+      }
+    };
+
+    indexTweets();
+  }, []);
+
   return (
     <div className="App">
       <div className='container'>
@@ -14,37 +46,40 @@ function App() {
           <ul className="botao-lista">
             <li>
               <button className="botao-twitter">
-                <FaTwitter/>
+                <FaTwitter />
               </button>
             </li>
             <li>
               <button className="botao-explorar">
-              <FaSearch className='tres-icones'/>
-              Explorar
+                <FaSearch className='tres-icones' />
+                Explorar
               </button>
             </li>
             <li>
               <button className="botao-seguindo">
-                <FaUserFriends className='tres-icones'/>
+                <FaUserFriends className='tres-icones' />
                 Seguindo
               </button>
             </li>
           </ul>
         </div>
         <div className="div-central">
-          <SearchBar />
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Lucas Vilar'}
-            text={'Só um texto de twitter'}
-            username={'@geraldo'}
+          <SearchBar
+            user={user}
+            isLoggeedIn={isLoggeedIn}
+            setIsLoginModalOpen={setIsLoginModalOpen}
           />
 
-          <TweetHome
-            imageSrc={fotoPerfil}
-            name={'Eduarda Leal'}
-            username={'@geraldo'}
-            text={'Aqui é só um texto bem grande para ver como fica mais ou menos com limite de 200 caracteris qe eua g aofafjwfoiwajnfio awfuoawh g aofafjwfoiwajnfio awfuoawh g aofafjwfoiwajnfio awfuoawh g aofafjwfoiwajnfio awfuoawh g aofafjwfoiwajnfio awfuoawh jnfiuawhnfiu awfiunh ioauwf nhbv9iuawhn fiu awhfiuhwanbiufhawiu'} />
+
+          {tweets !== null && tweets.map(tweet => (
+            <TweetHome
+              key={tweet.id}
+              imageSrc={`http://192.168.0.100:3333/uploads/${tweet.User.photo}`}
+              name={tweet.User.name}
+              text={tweet.text}
+              username={`@${tweet.User.username}`}
+            />
+          ))}
           <TweetHome
             imageSrc={fotoPerfil}
             name={'Lucas Vilar'}
@@ -94,7 +129,14 @@ function App() {
 
 
         </div>
-        <Access></Access>
+        <Access
+          user={user}
+          setUser={setUser}
+          isLoggeedIn={isLoggeedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          isLoginModalOpen={isLoginModalOpen}
+          setIsLoginModalOpen={setIsLoginModalOpen}>
+        </Access>
       </div>
 
 

@@ -11,8 +11,9 @@ const TweetHome = ({ imageSrc, name, username, text }) => {
                 <div>
                     <a className="tweet-name">{name}</a>
                     <a className="tweet-username">{username}</a>
-                    </div>
-                
+                    <a className="tweet-username">· 2 h</a>
+                </div>
+
                 <a className="tweet-text">{text}</a>
             </div>
         </div>

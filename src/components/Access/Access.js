@@ -2,20 +2,19 @@ import { useState, useEffect, useRef } from 'react';
 import './Access.css';
 import { FaUser, FaCog, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import api from '../../service/api';
-import axios from 'axios';
 import fotoPerfil from '../../foto-perfil.png';
 
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-function Access() {
+function Access({user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen}) {
 
-    const [user, setUser] = useState();
+    // const [user, setUser] = useState();
     const [forceUpdate, setForceUpdate] = useState(0);
-    const [isLoggeedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggeedIn, setIsLoggedIn] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    // const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isCadastroModalOpen, setIsCadastroModalOpen] = useState(false);
     const [name, setName] = useState('');
     const [nameValid, setNameValid] = useState(true);

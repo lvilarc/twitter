@@ -1,26 +1,88 @@
 import React, { useState } from 'react';
 import './SearchBar.css';
 import { FaSearch, FaTimes } from 'react-icons/fa';
-import { FiEdit, FiUpload, FiX  } from 'react-icons/fi';
+import { FiEdit, FiUpload } from 'react-icons/fi';
+import api from '../../service/api';
 
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-const SearchBar = ({ onChange, onSearch }) => {
+const SearchBar = ({ user, isLoggeedIn, setIsLoginModalOpen, onChange, onSearch }) => {
 
-  
+
   const [aba, setAba] = useState('Explorar');
   const [tweetText, setTweetText] = useState('');
 
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
+  const [tweetValid, setTweetValid] = useState(true);
+
+  const createTweet = async (newTweet) => {
+    try {
+      // console.log(newTweet);
+      if (selectedImage == null) {
+        const response = await api.post(`/tweets/user/${user.id}`, newTweet)
+        // window.location.reload();
+      } else {
+        
+        const response = await api.post(`tweets/image/user/${user.id}`, newTweet, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        // console.log(response)
+        // window.location.reload();
+      }
+
+      // console.log(response.status);
+      // if (response.status = 200) {
+
+
+
+      // }
+
+
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleTweetSubmit = (event) => {
+    event.preventDefault();
+    if (tweetText.length < 1 && selectedImage == null) {
+      //Aparecer campo invalido
+      setTweetValid(false);
+    } else {
+      let newTweet
+      if (selectedImage == null) {
+        newTweet = {
+          text: tweetText
+        }
+      } else {
+        newTweet = new FormData();
+        newTweet.append('text', tweetText);
+        newTweet.append('file', selectedImage);
+      }
+
+
+      console.log(newTweet);
+      createTweet(newTweet);
+      setIsWriteModalOpen(false)
+      // setTimeout(function() {
+      //   window.location.reload();
+      // }, 100);
+    }
+
+  }
 
 
 
 
   const handleTweetTextChange = (event) => {
+    setTweetValid(true);
     const value = event.target.value;
     if (value.length <= 280) {
       setTweetText(value);
@@ -28,6 +90,7 @@ const SearchBar = ({ onChange, onSearch }) => {
   };
 
   const handleImageChange = (event) => {
+    setTweetValid(true);
     const file = event.target.files[0];
     setSelectedImage(file);
     const previewURL = URL.createObjectURL(file);
@@ -40,10 +103,17 @@ const SearchBar = ({ onChange, onSearch }) => {
   };
 
   const openWriteModal = () => {
-    setIsWriteModalOpen(true);
+    if (isLoggeedIn) {
+      setIsWriteModalOpen(true);
+    }
+    else {
+      setIsLoginModalOpen(true);
+    }
+
   };
 
   const closeWriteModal = () => {
+    setTweetValid(true);
     setIsWriteModalOpen(false);
     setSelectedImage(null);
     setImagePreview('');
@@ -90,14 +160,15 @@ const SearchBar = ({ onChange, onSearch }) => {
 
 
             ></textarea>
+            {!tweetValid && <span className="form__message">Para postar é necessário escrever algo ou adicionar uma imagem</span>}
 
             {selectedImage ? (
               <div className='div-imagem-remove'>
                 {/* <p>Imagem selecionada: {selectedImage.name}</p> */}
-               
+
                 <img src={imagePreview} alt="Imagem selecionada" className="image-preview" />
-                <button className='remove-image-button' onClick={handleImageRemove}><FaTimes className='fa-times-remove-image'/></button>
-                
+                <button className='remove-image-button' onClick={handleImageRemove}><FaTimes className='fa-times-remove-image' /></button>
+
               </div>
             ) : (
               <label htmlFor="tweet-image" className="upload-button">
@@ -113,7 +184,12 @@ const SearchBar = ({ onChange, onSearch }) => {
               </label>
             )}
 
-            <button type="submit" className='modal-login__button'>Tweetar</button>
+            <button
+              type="submit"
+              className='modal-login__button'
+              onClick={handleTweetSubmit}
+            >
+              Tweetar</button>
           </form>
 
 
