@@ -18,67 +18,72 @@ const Perfil = ({ user, imageSrc, name, username }) => {
     const [nameValue, setNameValue] = useState('');
     const [usernameValue, setUsernameValue] = useState('');
 
-    const [salvarValid, setSalvarValid] = useState(true);
+    const [isNameValueValid, setIsNameValueValid] = useState(true);
+    const [isUsernameValueValid, setIsUsernameValueValid] = useState(true);
 
     const updateUser = async (updateUserData) => {
         try {
-          // console.log(newTweet);
-          if (selectedImage == null) {
-            const response = await api.post(`/tweets/user/${user.id}`, updateUserData) // Tem que mudar as rotas
-            // window.location.reload();
-          } else {
-            
-            const response = await api.post(`tweets/image/user/${user.id}`, updateUserData, { // Tem que mudar as rotas
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            });
-            // console.log(response)
-            // window.location.reload();
-          }
-    
-          // console.log(response.status);
-          // if (response.status = 200) {
-    
-    
-    
-          // }
-    
-    
-    
+            // console.log(newTweet);
+            if (selectedImage == null) {
+                const response = await api.put(`/users/${user.id}`, updateUserData) // Tem que mudar as rotas
+                // window.location.reload();
+            } else {
+
+                const response = await api.put(`/user/updateWithImage/${user.id}`, updateUserData, { // Tem que mudar as rotas /user/updateWithImage/:id
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                // console.log(response)
+                // window.location.reload();
+            }
+
+            // console.log(response.status);
+            // if (response.status = 200) {
+
+
+
+            // }
+
+
+
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
     }
 
     const handleUpdateSubmit = (event) => {
         event.preventDefault();
-        if (nameValue == ' ' || nameValue.length < 1 || usernameValue.length < 3) {
-          //Aparecer campo invalido
-          setSalvarValid(false);
-        } else {
-          let updateUserData
-          if (selectedImage == null) {
-            updateUserData = {
-              name: nameValue,
-              username: usernameValue
-            }
-          } else {
-            updateUserData = new FormData();
-            updateUserData.append('text', updateUserData);
-            updateUserData.append('file', selectedImage);
-          }
-    
-    
-          console.log(updateUserData);
-          updateUser(updateUserData);
-          setIsEditPerfilModalOpen(false)
-          // setTimeout(function() {
-          //   window.location.reload();
-          // }, 100);
+        if (nameValue == ' ' || nameValue.length < 1) {
+            setIsNameValueValid(false);
         }
-    
-      }
+        if (usernameValue.length < 3) {
+            setIsUsernameValueValid(false);
+        }
+        if (!(nameValue == ' ' || nameValue.length < 1 || usernameValue.length < 3)) {
+            let updateUserData
+            if (selectedImage == null) {
+                updateUserData = {
+                    name: nameValue,
+                    username: usernameValue
+                }
+            } else {
+                updateUserData = new FormData();
+                updateUserData.append('name', nameValue);
+                updateUserData.append('username', usernameValue);
+                updateUserData.append('file', selectedImage);
+            }
+
+
+            console.log(updateUserData);
+            updateUser(updateUserData);
+            setIsEditPerfilModalOpen(false)
+            // setTimeout(function() {
+            //   window.location.reload();
+            // }, 100);
+        }
+
+    }
 
     useEffect(() => {
         setNameValue(user.name);
@@ -95,6 +100,8 @@ const Perfil = ({ user, imageSrc, name, username }) => {
         setNameValue(user.name);
         setUsernameValue(user.username);
         setIsEditPerfilModalOpen(false);
+        setIsNameValueValid(true);
+        setIsUsernameValueValid(true);
     }
 
     const handleUsernameValueChange = (event) => {
@@ -151,10 +158,11 @@ const Perfil = ({ user, imageSrc, name, username }) => {
                                 id="name-edit-perfil"
                                 onChange={handleNameValueChange}
                                 value={nameValue}
-                                style={{ marginBottom: '20px' }}
+                                style={{ marginBottom: '0px' }}
                             />
                             <label htmlFor="name-edit-perfil" className="form__label">Nome</label>
                         </div>
+                        {!isNameValueValid && <span className="form__message">Campo em branco</span>}
                         <div className="form__group field">
                             <input
                                 type="input"
@@ -163,10 +171,11 @@ const Perfil = ({ user, imageSrc, name, username }) => {
                                 id="name-edit-perfil"
                                 onChange={handleUsernameValueChange}
                                 value={usernameValue}
-                                style={{ marginBottom: '20px' }}
+                                style={{ marginBottom: '0px' }}
                             />
                             <label htmlFor="name-edit-perfil" className="form__label">Username</label>
                         </div>
+                        {!isUsernameValueValid && <span className="form__message">Mínimo de 3 caracteres</span>}
                         <h2 className='foto-de-perfil-label'>Foto de perfil</h2>
                         {selectedImage ? (
                             <div className='div-imagem-remove'>
@@ -207,11 +216,11 @@ const Perfil = ({ user, imageSrc, name, username }) => {
                         )}
 
 
-                       
+
                         <button
                             type="submit"
                             className='modal-login__button'
-                        onClick={handleUpdateSubmit}
+                            onClick={handleUpdateSubmit}
                         >
                             Salvar</button>
                     </form>
