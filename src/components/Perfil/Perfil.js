@@ -47,7 +47,7 @@ const Perfil = ({ indexTweetsUser, checkSession, user, imageSrc, name, username 
             // }
 
             checkSession();
-            // indexTweetsUser();
+            indexTweetsUser();
 
             
         } catch (error) {
