@@ -6,10 +6,11 @@ import fotoPerfil from '../../foto-perfil.png';
 
 
 import Modal from 'react-modal';
+import baseURL from '../../service/baseURL';
 
 Modal.setAppElement('#root');
 
-function Access({ setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen, setShowMyPerfil }) {
+function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen, setShowMyPerfil }) {
 
     // const [user, setUser] = useState();
     const [forceUpdate, setForceUpdate] = useState(0);
@@ -30,63 +31,16 @@ function Access({ setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginMo
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [emailLogin, setEmailLogin] = useState('');
     const [passwordLogin, setPasswordLogin] = useState('');
-    const [showAccess, setShowAccess] = useState(false);
+    // const [showAccess, setShowAccess] = useState(false);
     const [loginValid, setLoginValid] = useState(true);
 
 
     const dropdownRef = useRef();
 
 
-    const getDetails = async (token) => {
-        try {
-            const response = await api.get('/auth/getDetails', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            console.log(response.data.user)
-            setUser(response.data.user);
-            setIsLoggedIn(true);
+    
 
-
-        } catch (error) {
-
-            setIsLoggedIn(false);
-            setShowAccess(true);
-
-
-        }
-    }
-
-    const checkSession = () => {
-        // Verificar se há um token armazenado no Local Storage
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            getDetails(token);
-
-
-
-            // Verificar se o token é válido (por exemplo, verificando sua expiração)
-
-
-            // Se o token for válido, você pode atualizar o estado do aplicativo para indicar que o usuário está logado
-            // Por exemplo: dispatch(setUserLoggedIn(true));
-
-            // Caso contrário, você pode chamar a função de logout para limpar o token do Local Storage
-            // logout();
-        } else {
-            setIsLoggedIn(false)
-            setShowAccess(true);
-            // O token não está presente no Local Storage ou não é válido
-            // Você pode atualizar o estado do aplicativo para indicar que o usuário não está logado
-            // Por exemplo: dispatch(setUserLoggedIn(false));
-        }
-    };
-
-    useEffect(() => {
-        checkSession();
-    }, []);
+   
 
     useEffect(() => {
         if (isDropdownOpen) {
@@ -168,6 +122,7 @@ function Access({ setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginMo
         setIsDropdownOpen(false);
         setTitle('Meu perfil');
         setShowMyPerfil(true);
+        setShowUserPerfil(false);
     }
 
     const handleLogout = () => {
@@ -376,7 +331,7 @@ function Access({ setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginMo
 
 
                     {user && user.photo ? (
-                        <img src={`http://192.168.0.13:3333/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
+                        <img src={`${baseURL}/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     ) : (
                         <img src={fotoPerfil} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     )}

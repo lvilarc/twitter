@@ -5,10 +5,11 @@ import { FiUpload } from 'react-icons/fi';
 import api from '../../service/api';
 
 import Modal from 'react-modal';
+import baseURL from '../../service/baseURL';
 
 Modal.setAppElement('#root');
 
-const Perfil = ({ user, imageSrc, name, username }) => {
+const Perfil = ({ indexTweetsUser, checkSession, user, imageSrc, name, username }) => {
 
     const [isEditPerfilModalOpen, setIsEditPerfilModalOpen] = useState(false);
 
@@ -45,8 +46,10 @@ const Perfil = ({ user, imageSrc, name, username }) => {
 
             // }
 
+            checkSession();
+            // indexTweetsUser();
 
-
+            
         } catch (error) {
             console.error(error);
         }
@@ -130,12 +133,12 @@ const Perfil = ({ user, imageSrc, name, username }) => {
             <div className='div-background-perfil'></div>
             <div className="perfil-avatar-container">
 
-                <img src={imageSrc} className="perfil-avatar" />
+                <img src={`${baseURL}/uploads/${user.photo}`} className="perfil-avatar" />
 
 
             </div>
-            <h2 className='perfil-h2'>{name}</h2>
-            <a className="perfil-username">{username}</a>
+            <h2 className='perfil-h2'>{user.name}</h2>
+            <a className="perfil-username">{`@${user.username}`}</a>
             <button className='editar-meuperfil' onClick={openEditPerfilModal}>Editar</button>
             <Modal
                 isOpen={isEditPerfilModalOpen}
