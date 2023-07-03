@@ -32,19 +32,45 @@ function App() {
     try {
       // console.log(id)
       const response = await api.get(`/users/${id}`);
+      const user = response.data.user;
 
-      // console.log('disso aqui')
-      // console.log(response.data.user)
 
-      setUsuarioPerfil(response.data.user);
 
+      // Verificar se a propriedade "photo" está presente e é do tipo Buffer
+      if (user.photo && user.photo.type === 'Buffer') {
+        // Converter o array de bytes em ArrayBuffer
+        const arrayBuffer = Uint8Array.from(user.photo.data).buffer;
+
+        // Criar uma Blob a partir do ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+        // Criar uma URL temporária para o Blob
+        const url = URL.createObjectURL(blob);
+
+        // Atualizar a propriedade "photo" do usuário com a URL
+        user.photo = url;
+      }
+      // console.log('esse e o usuario perfil')
+      // console.log(user)
+
+      setUsuarioPerfil(user);
+      // setShowUserPerfil(true)
 
       //   , () => {
       //   console.log('atualizou')
       //   console.log(usuarioPerfil)
       //   setShowUserPerfil(true);
       // });
-      // setTitle(response.data.user.name)
+      // console.log("response id: " + response.data.user.id)
+      // console.log("user id: " + user.id)
+      // console.log(user)
+      // if (response.data.user.id = user.id) {
+      //   setTitle("Meu perfil");
+      // } else {
+      //   setTitle(response.data.user.name)
+      // }
+      setTitle(response.data.user.name);
+      
       // setTimeout(()=> {
       //   console.log('usuario perfil: ')
       //   console.log(usuarioPerfil)
@@ -72,8 +98,14 @@ function App() {
       // }, 1000)
       setShowUserPerfil(true);
       setShowMyPerfil(false)
-      indexTweetsUser(usuarioPerfil.id)
-      console.log('entrou aqui')
+      if (showMyPerfil == true) {
+        indexTweetsUser();
+      } else if (showUserPerfil == true) {
+        indexTweetsUser(usuarioPerfil.id)
+      } else {
+        indexTweets()
+      }
+      // console.log('entrou aqui')
     }
   }, [usuarioPerfil]);
 
@@ -83,14 +115,23 @@ function App() {
 
 
   const changePageToUserPerfil = () => {
+    
     // console.log("ssio aqui ta entr")
     setShowMyPerfil(false)
-    indexTweets();
+    if (showMyPerfil == true) {
+      indexTweetsUser();
+    } else if (showUserPerfil == true) {
+      indexTweetsUser(usuarioPerfil.id)
+    } else {
+      indexTweets()
+    }
+    // console.log('sim entra aqui sim')
+    setShowUserPerfil(true);
     // indexTweetsUser();
-
+    
     // setShowUserPerfil(true);
     // console.log(userPerfil)
-    // setTitle(userPerfil.name)
+    // setTitle(usuarioPerfil.name)
 
 
 
@@ -108,8 +149,44 @@ function App() {
           Authorization: `Bearer ${token}`
         }
       });
+      const user = response.data.user;
+
+
+
+      // Verificar se a propriedade "photo" está presente e é do tipo Buffer
+      if (user.photo && user.photo.type === 'Buffer') {
+        // Converter o array de bytes em ArrayBuffer
+        const arrayBuffer = Uint8Array.from(user.photo.data).buffer;
+
+        // Criar uma Blob a partir do ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+        // Criar uma URL temporária para o Blob
+        const url = URL.createObjectURL(blob);
+
+        // Atualizar a propriedade "photo" do usuário com a URL
+        user.photo = url;
+      }
+      // console.log(user)
+
+      // Verificar se a propriedade "photo" está presente e é do tipo Blob
+      // if (user.photo instanceof Blob) {
+      // Criar uma URL temporária para o objeto Blob
+      // const url = URL.createObjectURL(user.photo);
+
+      // // Atualizar a propriedade "photo" do usuário com a URL
+      // user.photo = url;
+      // console.log(user)
+      // }
+      console.log(user)
+      setUser(user);
+
+
+
+
+
       // console.log(response.data.user)
-      setUser(response.data.user);
+      // setUser(response.data.user);
       setIsLoggedIn(true);
 
 
@@ -161,19 +238,102 @@ function App() {
 
   const indexTweetsUser = async (id) => {
     try {
-      console.log('quantas vezes entrou aqaui')
+      console.log('INDEX TWEET USER')
       if (id == null) {
         // console.log(user.id)
         // console.log('E AQUI TAMBEM TA DEPOIS')
         const response = await api.get(`/tweet/user/${user.id}`);
         // console.log('response' + response)
-        setTweets([...response.data.tweets].reverse());
+        const tweets = response.data.tweets;
+
+
+        // Percorrer os tweets e converter as fotos dos usuários
+        const updatedTweets = tweets.map(tweet => {
+          const user = tweet.User;
+
+          // Verificar se a propriedade "photo" está presente e é do tipo Buffer
+          if (user.photo && user.photo.type === 'Buffer') {
+            // Converter o array de bytes em ArrayBuffer
+            const arrayBuffer = Uint8Array.from(user.photo.data).buffer;
+
+            // Criar uma Blob a partir do ArrayBuffer
+            const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+            // Criar uma URL temporária para o Blob
+            const url = URL.createObjectURL(blob);
+
+            // Atualizar a propriedade "photo" do usuário com a URL
+            user.photo = url;
+          }
+
+          if (tweet.tweetPhoto && tweet.tweetPhoto.type === 'Buffer') {
+            // Converter o array de bytes em ArrayBuffer
+            const arrayBuffer = Uint8Array.from(tweet.tweetPhoto.data).buffer;
+
+            // Criar uma Blob a partir do ArrayBuffer
+            const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+            // Criar uma URL temporária para o Blob
+            const url = URL.createObjectURL(blob);
+
+            // Atualizar a propriedade "photo" do usuário com a URL
+            tweet.tweetPhoto = url;
+          }
+
+
+          // Retornar o tweet atualizado
+          return tweet;
+        });
+
+        // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
+        setTweets(updatedTweets.reverse());
         // console.log(response.data.tweets)
       } else {
         // console.log('ENTROU AQUI OU NAO')
         const response = await api.get(`/tweet/user/${id}`);
         // console.log('response' + response)
-        setTweets([...response.data.tweets].reverse());
+        const tweets = response.data.tweets;
+
+
+        // Percorrer os tweets e converter as fotos dos usuários
+        const updatedTweets = tweets.map(tweet => {
+          const user = tweet.User;
+
+          // Verificar se a propriedade "photo" está presente e é do tipo Buffer
+          if (user.photo && user.photo.type === 'Buffer') {
+            // Converter o array de bytes em ArrayBuffer
+            const arrayBuffer = Uint8Array.from(user.photo.data).buffer;
+
+            // Criar uma Blob a partir do ArrayBuffer
+            const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+            // Criar uma URL temporária para o Blob
+            const url = URL.createObjectURL(blob);
+
+            // Atualizar a propriedade "photo" do usuário com a URL
+            user.photo = url;
+          }
+
+          if (tweet.tweetPhoto && tweet.tweetPhoto.type === 'Buffer') {
+            // Converter o array de bytes em ArrayBuffer
+            const arrayBuffer = Uint8Array.from(tweet.tweetPhoto.data).buffer;
+
+            // Criar uma Blob a partir do ArrayBuffer
+            const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+            // Criar uma URL temporária para o Blob
+            const url = URL.createObjectURL(blob);
+
+            // Atualizar a propriedade "photo" do usuário com a URL
+            tweet.tweetPhoto = url;
+          }
+
+          // Retornar o tweet atualizado
+          return tweet;
+        });
+
+        // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
+        setTweets(updatedTweets.reverse());
       }
 
 
@@ -182,32 +342,75 @@ function App() {
     }
   };
 
-  useEffect(() => {
+//   useEffect(() => {
 
 
 
 
-    if (showMyPerfil == true) {
-      indexTweetsUser();
-    } else {
-      indexTweets()
-    }
-   
+// //     if (showMyPerfil == true) {
+// //       indexTweetsUser();
+// //     } else if (showUserPerfil == true) {
+// //       indexTweetsUser(usuarioPerfil.id)
+// //     } else {
+// //       indexTweets()
+// //     }
 
 
 
 
 
+// // console.log('entra aqui sim')
 
-  }, [showMyPerfil]);
+//   }, [showMyPerfil]);
 
 
   const indexTweets = async () => {
     try {
-      console.log('QUANTAS VEZES ENTRA AQUI?')
+      console.log('INDEX TWEETS')
       const response = await api.get('/tweets');
-      setTweets([...response.data.tweets].reverse());
-      // console.log(response.data.tweets)
+      const tweets = response.data.tweets;
+
+
+      // Percorrer os tweets e converter as fotos dos usuários
+      const updatedTweets = tweets.map(tweet => {
+        const user = tweet.User;
+
+        // Verificar se a propriedade "photo" está presente e é do tipo Buffer
+        if (user.photo && user.photo.type === 'Buffer') {
+          // Converter o array de bytes em ArrayBuffer
+          const arrayBuffer = Uint8Array.from(user.photo.data).buffer;
+
+          // Criar uma Blob a partir do ArrayBuffer
+          const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+          // Criar uma URL temporária para o Blob
+          const url = URL.createObjectURL(blob);
+
+          // Atualizar a propriedade "photo" do usuário com a URL
+          user.photo = url;
+        }
+
+
+        if (tweet.tweetPhoto && tweet.tweetPhoto.type === 'Buffer') {
+          // Converter o array de bytes em ArrayBuffer
+          const arrayBuffer = Uint8Array.from(tweet.tweetPhoto.data).buffer;
+
+          // Criar uma Blob a partir do ArrayBuffer
+          const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+
+          // Criar uma URL temporária para o Blob
+          const url = URL.createObjectURL(blob);
+
+          // Atualizar a propriedade "photo" do usuário com a URL
+          tweet.tweetPhoto = url;
+        }
+
+        // Retornar o tweet atualizado
+        return tweet;
+      });
+
+      // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
+      setTweets(updatedTweets.reverse());
 
     } catch (error) {
 
@@ -220,7 +423,13 @@ function App() {
 
 
 
-    indexTweets();
+    if (showMyPerfil == true) {
+      indexTweetsUser();
+    } else if (showUserPerfil == true) {
+      indexTweetsUser(usuarioPerfil.id)
+    } else {
+      indexTweets()
+    }
 
 
 
@@ -230,19 +439,29 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (title === 'Explorar') {
-      indexTweets();
+    if (showMyPerfil == true) {
+      indexTweetsUser();
+    } else if (showUserPerfil == true) {
+      indexTweetsUser(usuarioPerfil.id)
+    } else {
+      indexTweets()
     }
 
   }, [title])
 
 
   const handleExplorar = () => {
-    indexTweets();
+    if (showMyPerfil == true) {
+      indexTweetsUser();
+    } else if (showUserPerfil == true) {
+      indexTweetsUser(usuarioPerfil.id)
+    } else {
+      indexTweets()
+    }
     setTitle('Explorar');
     setShowMyPerfil(false);
     setShowUserPerfil(false);
-    
+
 
   }
 
@@ -263,12 +482,12 @@ function App() {
                 Explorar
               </button>
             </li>
-            <li>
+            {/* <li>
               <button className="botao-seguindo">
                 <FaUserFriends className='tres-icones' />
                 Seguindo
               </button>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="div-central">
@@ -280,20 +499,22 @@ function App() {
           />
 
           {user !== null && showMyPerfil && (
-            <Perfil
-              imageSrc={`${baseURL}/uploads/${user.photo}`}
-              name={user.name}
-              username={`@${user.username}`}
-              user={user}
-              checkSession={checkSession}
-              indexTweetsUser={indexTweetsUser}
-            ></Perfil>
+            <div>
+              <Perfil
+                imageSrc={user.photo ? user.photo : fotoPerfil}
+                name={user.name}
+                username={`@${user.username}`}
+                user={user}
+                checkSession={checkSession}
+                indexTweetsUser={indexTweetsUser}
+              ></Perfil>
+            </div>
           )}
 
-          {showUserPerfil && (
+          {usuarioPerfil !== null && showUserPerfil && (
             <div key={usuarioPerfil.id}>
               <UserPerfil
-                photo={usuarioPerfil.photo}
+                photo={usuarioPerfil.photo ? usuarioPerfil.photo : fotoPerfil}
                 name={usuarioPerfil.name}
                 username={usuarioPerfil.username}
               />
@@ -313,11 +534,11 @@ function App() {
               {tweets.reverse().map(tweet => (
                 <div key={tweet.id}>
                   <TweetHome
-                    imageSrc={`${baseURL}/uploads/${tweet.User.photo}`}
+                    imageSrc={tweet.User.photo ? tweet.User.photo : fotoPerfil}
                     name={tweet.User.name}
                     text={tweet.text}
                     username={`@${tweet.User.username}`}
-                    imageSrcTweet={tweet.tweetPhoto ? `${baseURL}/uploads/${tweet.tweetPhoto}` : ''}
+                    imageSrcTweet={tweet.tweetPhoto ? tweet.tweetPhoto : ''}
                     timeElapsed={tweet.timeElapsed}
                     // setUserPerfil={setUserPerfil}
                     id={tweet.User.id}
@@ -326,6 +547,8 @@ function App() {
                     setShowMyPerfil={setShowMyPerfil}
                     user={user}
                     indexTweets={indexTweets}
+                    setTitle={setTitle}
+                    setShowUserPerfil={setShowUserPerfil}
                   />
                 </div>
               ))}

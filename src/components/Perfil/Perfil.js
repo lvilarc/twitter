@@ -133,7 +133,7 @@ const Perfil = ({ indexTweetsUser, checkSession, user, imageSrc, name, username 
             <div className='div-background-perfil'></div>
             <div className="perfil-avatar-container">
 
-                <img src={`${baseURL}/uploads/${user.photo}`} className="perfil-avatar" />
+                <img src={imageSrc} alt="Foto do usuário" className="perfil-avatar" />
 
 
             </div>

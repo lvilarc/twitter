@@ -331,7 +331,7 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
 
 
                     {user && user.photo ? (
-                        <img src={`${baseURL}/uploads/${user.photo}`} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
+                        <img src={user.photo} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     ) : (
                         <img src={fotoPerfil} className="login-avatar" onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
                     )}

@@ -19,13 +19,13 @@ const UserPerfil = ({ photo, name, username }) => {
             <div className='div-background-perfil'></div>
             <div className="perfil-avatar-container">
 
-                <img src={`${baseURL}/uploads/${photo}`} className="perfil-avatar" />
+                <img src={photo} className="perfil-avatar" />
 
 
             </div>
             <h2 className='perfil-h2'>{name}</h2>
             <a className="perfil-username">{`@${username}`}</a>
-            <button className='editar-meuperfil' >Seguir</button>
+            {/* <button className='editar-meuperfil' >Seguir</button> */}
            
 
 

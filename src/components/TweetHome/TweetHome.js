@@ -4,18 +4,19 @@ import api from '../../service/api';
 
 
 
-const TweetHome = ({ indexTweets, user, setShowMyPerfil, getUser, changePageToUserPerfil, id, setUserPerfil, imageSrc, name, username, text, imageSrcTweet, timeElapsed }) => {
+const TweetHome = ({ setShowUserPerfil, setTitle, indexTweets, user, setShowMyPerfil, getUser, changePageToUserPerfil, id, setUserPerfil, imageSrc, name, username, text, imageSrcTweet, timeElapsed }) => {
 
 
 
 
 
     const handleClick = () => {
-        console.log('id: ' + id);
-        console.log('userid: ' + user.id)
-        if (id == user.id) {
+        // console.log('id: ' + id);
+        // console.log('userid: ' + user.id)
+        if (user && id == user.id) {
           
             setShowMyPerfil(true);
+            setTitle("Meu perfil");
         
             
             window.scrollTo({
@@ -31,6 +32,8 @@ const TweetHome = ({ indexTweets, user, setShowMyPerfil, getUser, changePageToUs
         }
         else {
             getUser(id);
+            // setShowUserPerfil(true);
+            
             window.scrollTo({
                 top: 0,
                 // behavior: 'smooth' // Adicione 'smooth' para uma animação de rolagem suave
