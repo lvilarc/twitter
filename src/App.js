@@ -554,7 +554,7 @@ function App() {
 
           {tweets !== null && (
             <div>
-              {tweets.reverse().map(tweet => (
+              {tweets.map(tweet => (
                 <div key={tweet.id}>
                   <TweetHome
                     imageSrc={tweet.User.photo ? tweet.User.photo : fotoPerfil}
