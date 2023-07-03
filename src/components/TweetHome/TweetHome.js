@@ -4,7 +4,7 @@ import api from '../../service/api';
 
 
 
-const TweetHome = ({ setShowUserPerfil, setTitle, indexTweets, user, setShowMyPerfil, getUser, changePageToUserPerfil, id, setUserPerfil, imageSrc, name, username, text, imageSrcTweet, timeElapsed }) => {
+const TweetHome = ({ indexTweetsUser, setShowUserPerfil, setTitle, indexTweets, user, setShowMyPerfil, getUser, changePageToUserPerfil, id, setUserPerfil, imageSrc, name, username, text, imageSrcTweet, timeElapsed }) => {
 
 
 
@@ -14,7 +14,7 @@ const TweetHome = ({ setShowUserPerfil, setTitle, indexTweets, user, setShowMyPe
         // console.log('id: ' + id);
         // console.log('userid: ' + user.id)
         if (user && id == user.id) {
-          
+            indexTweetsUser(user.id);
             setShowMyPerfil(true);
             setTitle("Meu perfil");
         
@@ -38,7 +38,7 @@ const TweetHome = ({ setShowUserPerfil, setTitle, indexTweets, user, setShowMyPe
                 top: 0,
                 // behavior: 'smooth' // Adicione 'smooth' para uma animação de rolagem suave
             });
-            changePageToUserPerfil();
+            // changePageToUserPerfil();
             // Logica para ir para o Perfil do usuario
         }
 

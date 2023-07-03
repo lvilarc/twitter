@@ -53,8 +53,11 @@ function App() {
       // console.log('esse e o usuario perfil')
       // console.log(user)
 
+
       setUsuarioPerfil(user);
-      // setShowUserPerfil(true)
+      setShowMyPerfil(false)
+      setShowUserPerfil(true)
+      
 
       //   , () => {
       //   console.log('atualizou')
@@ -70,6 +73,7 @@ function App() {
       //   setTitle(response.data.user.name)
       // }
       setTitle(response.data.user.name);
+      indexTweetsUser(user.id)
 
       // setTimeout(()=> {
       //   console.log('usuario perfil: ')
@@ -89,53 +93,53 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    if (usuarioPerfil !== null) {
-      // console.log('do useeffetc')
-      // console.log(usuarioPerfil)
-      // setTimeout(()=> {
-      //   setShowUserPerfil(true);
-      // }, 1000)
-      setShowUserPerfil(true);
-      setShowMyPerfil(false)
-      if (showMyPerfil == true) {
-        indexTweetsUser();
-      } else if (showUserPerfil == true) {
-        indexTweetsUser(usuarioPerfil.id)
-      } else {
-        indexTweets()
-      }
-      // console.log('entrou aqui')
-    }
-  }, [usuarioPerfil]);
+  // useEffect(() => {
+  //   if (usuarioPerfil !== null) {
+  //     // console.log('do useeffetc')
+  //     // console.log(usuarioPerfil)
+  //     // setTimeout(()=> {
+  //     //   setShowUserPerfil(true);
+  //     // }, 1000)
+  //     setShowUserPerfil(true);
+  //     setShowMyPerfil(false)
+  //     if (showMyPerfil == true) {
+  //       indexTweetsUser();
+  //     } else if (showUserPerfil == true) {
+  //       indexTweetsUser(usuarioPerfil.id)
+  //     } else {
+  //       indexTweets()
+  //     }
+  //     // console.log('entrou aqui')
+  //   }
+  // }, [usuarioPerfil]);
 
 
 
 
 
 
-  const changePageToUserPerfil = () => {
+  // const changePageToUserPerfil = () => {
 
-    // console.log("ssio aqui ta entr")
-    setShowMyPerfil(false)
-    if (showMyPerfil == true) {
-      indexTweetsUser();
-    } else if (showUserPerfil == true) {
-      indexTweetsUser(usuarioPerfil.id)
-    } else {
-      indexTweets()
-    }
-    // console.log('sim entra aqui sim')
-    setShowUserPerfil(true);
-    // indexTweetsUser();
+  //   // console.log("ssio aqui ta entr")
+  //   setShowMyPerfil(false)
+  //   if (showMyPerfil == true) {
+  //     indexTweetsUser();
+  //   } else if (showUserPerfil == true) {
+  //     indexTweetsUser(usuarioPerfil.id)
+  //   } else {
+  //     indexTweets()
+  //   }
+  //   // console.log('sim entra aqui sim')
+  //   setShowUserPerfil(true);
+  //   // indexTweetsUser();
 
-    // setShowUserPerfil(true);
-    // console.log(userPerfil)
-    // setTitle(usuarioPerfil.name)
+  //   // setShowUserPerfil(true);
+  //   // console.log(userPerfil)
+  //   // setTitle(usuarioPerfil.name)
 
 
 
-  }
+  // }
 
   // useEffect(() => {
   //   console.log(userPerfil)
@@ -434,15 +438,15 @@ function App() {
 
 
 
+    indexTweets()
 
-
-    if (showMyPerfil == true) {
-      indexTweetsUser();
-    } else if (showUserPerfil == true) {
-      indexTweetsUser(usuarioPerfil.id)
-    } else {
-      indexTweets()
-    }
+    // if (showMyPerfil == true) {
+    //   indexTweetsUser();
+    // } else if (showUserPerfil == true) {
+    //   indexTweetsUser(usuarioPerfil.id)
+    // } else {
+    //   indexTweets()
+    // }
 
 
 
@@ -451,26 +455,27 @@ function App() {
     // console.log(user)
   }, []);
 
-  useEffect(() => {
-    if (showMyPerfil == true) {
-      indexTweetsUser();
-    } else if (showUserPerfil == true) {
-      indexTweetsUser(usuarioPerfil.id)
-    } else {
-      indexTweets()
-    }
+  // useEffect(() => {
+  //   if (showMyPerfil == true) {
+  //     indexTweetsUser();
+  //   } else if (showUserPerfil == true) {
+  //     indexTweetsUser(usuarioPerfil.id)
+  //   } else {
+  //     indexTweets()
+  //   }
 
-  }, [title])
+  // }, [title])
 
 
   const handleExplorar = () => {
-    if (showMyPerfil == true) {
-      indexTweetsUser();
-    } else if (showUserPerfil == true) {
-      indexTweetsUser(usuarioPerfil.id)
-    } else {
-      indexTweets()
-    }
+    // if (showMyPerfil == true) {
+    //   indexTweetsUser();
+    // } else if (showUserPerfil == true) {
+    //   indexTweetsUser(usuarioPerfil.id)
+    // } else {
+      
+    // }
+    indexTweets()
     setTitle('Explorar');
     setShowMyPerfil(false);
     setShowUserPerfil(false);
@@ -555,13 +560,14 @@ function App() {
                     timeElapsed={tweet.timeElapsed}
                     // setUserPerfil={setUserPerfil}
                     id={tweet.User.id}
-                    changePageToUserPerfil={changePageToUserPerfil}
+                    // changePageToUserPerfil={changePageToUserPerfil}
                     getUser={getUser}
                     setShowMyPerfil={setShowMyPerfil}
                     user={user}
                     indexTweets={indexTweets}
                     setTitle={setTitle}
                     setShowUserPerfil={setShowUserPerfil}
+                    indexTweetsUser={indexTweetsUser}
                   />
                 </div>
               ))}
@@ -583,7 +589,8 @@ function App() {
           setShowUserPerfil={setShowUserPerfil}
           setTitle={setTitle}
           showAccess={showAccess}
-          setShowAccess={setShowAccess}>
+          setShowAccess={setShowAccess}
+          indexTweetsUser={indexTweetsUser}>
 
         </Access>
       </div>

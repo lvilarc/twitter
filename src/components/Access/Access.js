@@ -10,7 +10,7 @@ import baseURL from '../../service/baseURL';
 
 Modal.setAppElement('#root');
 
-function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen, setShowMyPerfil }) {
+function Access({ indexTweetsUser, setShowUserPerfil, showAccess, setShowAccess, setTitle, user, setUser, isLoggeedIn, setIsLoggedIn, isLoginModalOpen, setIsLoginModalOpen, setShowMyPerfil }) {
 
     // const [user, setUser] = useState();
     const [forceUpdate, setForceUpdate] = useState(0);
@@ -120,6 +120,7 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
     };
 
     const handleEditarPerfil = () => {
+        indexTweetsUser(user.id)
         setIsDropdownOpen(false);
         setTitle('Meu perfil');
         setShowMyPerfil(true);
