@@ -250,6 +250,7 @@ function App() {
         // console.log('response' + response)
         const tweets = response.data.tweets;
         const reversedTweets = [...tweets].reverse();
+        console.log(reversedTweets)
 
 
         // Percorrer os tweets e converter as fotos dos usuários
@@ -302,6 +303,7 @@ function App() {
         // console.log('response' + response)
         const tweets = response.data.tweets;
         const reversedTweets = [...tweets].reverse();
+        console.log(reversedTweets)
 
 
         // Percorrer os tweets e converter as fotos dos usuários
@@ -376,9 +378,7 @@ function App() {
 
   //   }, [showMyPerfil]);
 
-  useEffect(()=> {
-    setTweets[[...tweets].reverse()];
-  }, [tweets])
+
 
 
   const indexTweets = async () => {
@@ -387,6 +387,7 @@ function App() {
       const response = await api.get('/tweets');
       const tweets = response.data.tweets;
       const reversedTweets = [...tweets].reverse();
+      console.log(reversedTweets)
 
 
       // Percorrer os tweets e converter as fotos dos usuários
