@@ -245,10 +245,11 @@ function App() {
         const response = await api.get(`/tweet/user/${user.id}`);
         // console.log('response' + response)
         const tweets = response.data.tweets;
+        const reversedTweets = tweets.reverse();
 
 
         // Percorrer os tweets e converter as fotos dos usuários
-        const updatedTweets = tweets.map(tweet => {
+        const updatedTweets = reversedTweets.map(tweet => {
           const user = tweet.User;
 
           // Verificar se a propriedade "photo" está presente e é do tipo Buffer
@@ -286,20 +287,21 @@ function App() {
         });
 
         // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
-        const reversedTweets = updatedTweets.reverse();
-        setTimeout(() => {
-          setTweets(reversedTweets);
-        }, 100);
+       
+
+        setTweets(updatedTweets);
+
         // console.log(response.data.tweets)
       } else {
         // console.log('ENTROU AQUI OU NAO')
         const response = await api.get(`/tweet/user/${id}`);
         // console.log('response' + response)
         const tweets = response.data.tweets;
+        const reversedTweets = tweets.reverse();
 
 
         // Percorrer os tweets e converter as fotos dos usuários
-        const updatedTweets = tweets.map(tweet => {
+        const updatedTweets = reversedTweets.map(tweet => {
           const user = tweet.User;
 
           // Verificar se a propriedade "photo" está presente e é do tipo Buffer
@@ -336,11 +338,11 @@ function App() {
         });
 
         // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
-        const reversedTweets = updatedTweets.reverse();
         
-        setTimeout(() => {
-          setTweets(reversedTweets);
-        }, 100);
+
+
+        setTweets(updatedTweets);
+
       }
 
 
@@ -376,10 +378,11 @@ function App() {
       console.log('INDEX TWEETS')
       const response = await api.get('/tweets');
       const tweets = response.data.tweets;
+      const reversedTweets = tweets.reverse();
 
 
       // Percorrer os tweets e converter as fotos dos usuários
-      const updatedTweets = tweets.map(tweet => {
+      const updatedTweets = reversedTweets.map(tweet => {
         const user = tweet.User;
 
         // Verificar se a propriedade "photo" está presente e é do tipo Buffer
@@ -417,10 +420,10 @@ function App() {
       });
 
       // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
-      const reversedTweets = updatedTweets.reverse();
-      setTimeout(() => {
-        setTweets(reversedTweets);
-      }, 100);
+      
+
+      setTweets(updatedTweets);
+
 
     } catch (error) {
 
