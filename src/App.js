@@ -376,6 +376,10 @@ function App() {
 
   //   }, [showMyPerfil]);
 
+  useEffect(()=> {
+    setTweets[[...tweets].reverse()];
+  }, [tweets])
+
 
   const indexTweets = async () => {
     try {
