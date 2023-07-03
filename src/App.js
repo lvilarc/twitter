@@ -249,7 +249,7 @@ function App() {
         const response = await api.get(`/tweet/user/${user.id}`);
         // console.log('response' + response)
         const tweets = response.data.tweets;
-        const reversedTweets = tweets.reverse();
+        const reversedTweets = [...tweets].reverse();
 
 
         // Percorrer os tweets e converter as fotos dos usuários
@@ -301,7 +301,7 @@ function App() {
         const response = await api.get(`/tweet/user/${id}`);
         // console.log('response' + response)
         const tweets = response.data.tweets;
-        const reversedTweets = tweets.reverse();
+        const reversedTweets = [...tweets].reverse();
 
 
         // Percorrer os tweets e converter as fotos dos usuários
@@ -382,7 +382,7 @@ function App() {
       console.log('INDEX TWEETS')
       const response = await api.get('/tweets');
       const tweets = response.data.tweets;
-      const reversedTweets = tweets.reverse();
+      const reversedTweets = [...tweets].reverse();
 
 
       // Percorrer os tweets e converter as fotos dos usuários
