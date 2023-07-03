@@ -70,7 +70,7 @@ function App() {
       //   setTitle(response.data.user.name)
       // }
       setTitle(response.data.user.name);
-      
+
       // setTimeout(()=> {
       //   console.log('usuario perfil: ')
       //   console.log(usuarioPerfil)
@@ -115,7 +115,7 @@ function App() {
 
 
   const changePageToUserPerfil = () => {
-    
+
     // console.log("ssio aqui ta entr")
     setShowMyPerfil(false)
     if (showMyPerfil == true) {
@@ -128,7 +128,7 @@ function App() {
     // console.log('sim entra aqui sim')
     setShowUserPerfil(true);
     // indexTweetsUser();
-    
+
     // setShowUserPerfil(true);
     // console.log(userPerfil)
     // setTitle(usuarioPerfil.name)
@@ -287,7 +287,9 @@ function App() {
 
         // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
         const reversedTweets = updatedTweets.reverse();
-  await setTweets(reversedTweets);
+        setTimeout(() => {
+          setTweets(reversedTweets);
+        }, 100);
         // console.log(response.data.tweets)
       } else {
         // console.log('ENTROU AQUI OU NAO')
@@ -335,7 +337,10 @@ function App() {
 
         // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
         const reversedTweets = updatedTweets.reverse();
-  await setTweets(reversedTweets);
+        
+        setTimeout(() => {
+          setTweets(reversedTweets);
+        }, 100);
       }
 
 
@@ -344,26 +349,26 @@ function App() {
     }
   };
 
-//   useEffect(() => {
+  //   useEffect(() => {
 
 
 
 
-// //     if (showMyPerfil == true) {
-// //       indexTweetsUser();
-// //     } else if (showUserPerfil == true) {
-// //       indexTweetsUser(usuarioPerfil.id)
-// //     } else {
-// //       indexTweets()
-// //     }
+  // //     if (showMyPerfil == true) {
+  // //       indexTweetsUser();
+  // //     } else if (showUserPerfil == true) {
+  // //       indexTweetsUser(usuarioPerfil.id)
+  // //     } else {
+  // //       indexTweets()
+  // //     }
 
 
 
 
 
-// // console.log('entra aqui sim')
+  // // console.log('entra aqui sim')
 
-//   }, [showMyPerfil]);
+  //   }, [showMyPerfil]);
 
 
   const indexTweets = async () => {
@@ -413,7 +418,9 @@ function App() {
 
       // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
       const reversedTweets = updatedTweets.reverse();
-  await setTweets(reversedTweets);
+      setTimeout(() => {
+        setTweets(reversedTweets);
+      }, 100);
 
     } catch (error) {
 
