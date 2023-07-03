@@ -1,3 +1,3 @@
-const baseURL = 'http://localhost:3333'
+const baseURL = 'https://twitter-backend-em-node.onrender.com'
 
 export default baseURL;

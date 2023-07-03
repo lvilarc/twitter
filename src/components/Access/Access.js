@@ -62,6 +62,7 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
     const createUser = async (newUser) => {
         try {
             const response = await api.post('/users', newUser);
+            console.log('oi')
             console.log(response.status);
             if (response.status = 200) {
                 const token = response.data.token;
@@ -221,13 +222,16 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
     };
 
     const handleSubmit = (e) => {
+        
         let resDataCheckUsername;
         let resDataCheckEmail;
         let formIsValid = true;
         const checkUsername = async () => {
             try {
+                
                 const response = await api.get(`/users/checkUsername/${username}`);
                 resDataCheckUsername = response.data;
+               
 
             } catch (error) {
                 console.error('Erro ao buscar se usuario ja existe:', error);
@@ -239,6 +243,7 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
                     email: email
                 });
                 resDataCheckEmail = response.data;
+               
 
             } catch (error) {
                 console.error('Erro ao buscar se usuario ja existe:', error);
@@ -247,14 +252,17 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
 
         e.preventDefault();
         //Melhorar isso
-
+        
 
         // Verificação de regex de email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+       
         checkUsername();
+      
         checkEmail();
 
         setTimeout(function () {
+           
             if (resDataCheckUsername == '0') {
 
             }
@@ -262,9 +270,10 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
                 setUsernameAlreadyExists(true);
                 formIsValid = false;
             }
-            else {
-                formIsValid = false;
-            }
+            // else {
+            //     console.log('nao pode entrar aqui')
+            //     formIsValid = false;
+            // }
             if (resDataCheckEmail == '0') {
 
             }
@@ -272,9 +281,10 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
                 setEmailAlreadyExists(true);
                 formIsValid = false;
             }
-            else {
-                formIsValid = false;
-            }
+            // else {
+            //     console.log('nao pode entrar aqui 2')
+            //     formIsValid = false;
+            // }
 
             if (!emailRegex.test(email)) {
                 setEmailValid(false);
@@ -284,6 +294,7 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
                 setNameValid(false);
                 formIsValid = false;
             }
+          
             const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
             const usernameisvalid = usernameRegex.test(username);
             if (!usernameisvalid) {
@@ -296,8 +307,9 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
                 setPasswordValid(passwordisvalid);
                 formIsValid = false;
             }
-
+          
             // Confirmação final para enviar para chamar a api
+            console.log(formIsValid)
             if (formIsValid) {
                 const newUser = {
                     name: name,
@@ -305,7 +317,9 @@ function Access({ setShowUserPerfil, showAccess, setShowAccess, setTitle, user, 
                     username: username,
                     password: password,
                 };
+              
                 createUser(newUser);
+              
             }
         }, 100);
     }
