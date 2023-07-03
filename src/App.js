@@ -286,7 +286,8 @@ function App() {
         });
 
         // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
-        setTweets(updatedTweets.reverse());
+        const reversedTweets = updatedTweets.reverse();
+  await setTweets(reversedTweets);
         // console.log(response.data.tweets)
       } else {
         // console.log('ENTROU AQUI OU NAO')
@@ -333,7 +334,8 @@ function App() {
         });
 
         // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
-        setTweets(updatedTweets.reverse());
+        const reversedTweets = updatedTweets.reverse();
+  await setTweets(reversedTweets);
       }
 
 
@@ -410,7 +412,8 @@ function App() {
       });
 
       // Atualizar o estado "tweets" com os tweets atualizados e revertê-los
-      setTweets(updatedTweets.reverse());
+      const reversedTweets = updatedTweets.reverse();
+  await setTweets(reversedTweets);
 
     } catch (error) {
 
