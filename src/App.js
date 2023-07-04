@@ -495,7 +495,7 @@ function App() {
         <div className='div-esquerda'>
           <ul className="botao-lista">
             <li>
-              <button className="botao-twitter">
+              <button className="botao-twitter" onClick={handleExplorar}>
                 <FaTwitter />
               </button>
             </li>

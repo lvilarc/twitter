@@ -1,3 +1,3 @@
-const baseURL = 'https://twitter-backend-em-node.onrender.com'
+const baseURL = 'https://twitter-backend-production-784b.up.railway.app/'
 
 export default baseURL;
